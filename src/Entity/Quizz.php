@@ -34,9 +34,15 @@ class Quizz
      */
     private $questions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Historique::class, mappedBy="quizz")
+     */
+    private $historiques;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
+        $this->historiques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,6 +98,36 @@ class Quizz
             // set the owning side to null (unless already changed)
             if ($question->getQuizz() === $this) {
                 $question->setQuizz(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Historique[]
+     */
+    public function getHistoriques(): Collection
+    {
+        return $this->historiques;
+    }
+
+    public function addHistorique(Historique $historique): self
+    {
+        if (!$this->historiques->contains($historique)) {
+            $this->historiques[] = $historique;
+            $historique->setQuizz($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistorique(Historique $historique): self
+    {
+        if ($this->historiques->removeElement($historique)) {
+            // set the owning side to null (unless already changed)
+            if ($historique->getQuizz() === $this) {
+                $historique->setQuizz(null);
             }
         }
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -69,6 +71,16 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $email_verif;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Historique::class, mappedBy="Users")
+     */
+    private $historiques;
+
+    public function __construct()
+    {
+        $this->historiques = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -231,6 +243,36 @@ class User implements UserInterface
     public function setEmailVerif(\DateTimeInterface $email_verif): self
     {
         $this->email_verif = $email_verif;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Historique[]
+     */
+    public function getHistoriques(): Collection
+    {
+        return $this->historiques;
+    }
+
+    public function addHistorique(Historique $historique): self
+    {
+        if (!$this->historiques->contains($historique)) {
+            $this->historiques[] = $historique;
+            $historique->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistorique(Historique $historique): self
+    {
+        if ($this->historiques->removeElement($historique)) {
+            // set the owning side to null (unless already changed)
+            if ($historique->getUsers() === $this) {
+                $historique->setUsers(null);
+            }
+        }
 
         return $this;
     }
