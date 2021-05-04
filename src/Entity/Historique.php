@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HistoriqueRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -44,6 +46,16 @@ class Historique
      * @ORM\Column(type="datetime")
      */
     private $date;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reponsehistorique::class, mappedBy="historique")
+     */
+    private $reponsehistoriques;
+
+    public function __construct()
+    {
+        $this->reponsehistoriques = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,6 +118,36 @@ class Historique
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reponsehistorique[]
+     */
+    public function getReponsehistoriques(): Collection
+    {
+        return $this->reponsehistoriques;
+    }
+
+    public function addReponsehistorique(Reponsehistorique $reponsehistorique): self
+    {
+        if (!$this->reponsehistoriques->contains($reponsehistorique)) {
+            $this->reponsehistoriques[] = $reponsehistorique;
+            $reponsehistorique->setHistorique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponsehistorique(Reponsehistorique $reponsehistorique): self
+    {
+        if ($this->reponsehistoriques->removeElement($reponsehistorique)) {
+            // set the owning side to null (unless already changed)
+            if ($reponsehistorique->getHistorique() === $this) {
+                $reponsehistorique->setHistorique(null);
+            }
+        }
 
         return $this;
     }

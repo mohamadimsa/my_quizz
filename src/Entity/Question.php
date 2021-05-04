@@ -35,9 +35,15 @@ class Question
      */
     private $reponses;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reponsehistorique::class, mappedBy="question")
+     */
+    private $reponsehistoriques;
+
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
+        $this->reponsehistoriques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,6 +99,36 @@ class Question
             // set the owning side to null (unless already changed)
             if ($reponse->getQuestion() === $this) {
                 $reponse->setQuestion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reponsehistorique[]
+     */
+    public function getReponsehistoriques(): Collection
+    {
+        return $this->reponsehistoriques;
+    }
+
+    public function addReponsehistorique(Reponsehistorique $reponsehistorique): self
+    {
+        if (!$this->reponsehistoriques->contains($reponsehistorique)) {
+            $this->reponsehistoriques[] = $reponsehistorique;
+            $reponsehistorique->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponsehistorique(Reponsehistorique $reponsehistorique): self
+    {
+        if ($this->reponsehistoriques->removeElement($reponsehistorique)) {
+            // set the owning side to null (unless already changed)
+            if ($reponsehistorique->getQuestion() === $this) {
+                $reponsehistorique->setQuestion(null);
             }
         }
 
