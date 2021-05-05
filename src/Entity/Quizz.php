@@ -25,9 +25,9 @@ class Quizz
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=categories::class, inversedBy="quizzs")
+     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="quizzs")
      */
-    private $categories;
+    public $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Question::class, mappedBy="quizz")
