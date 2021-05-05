@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\CssSelector\Node\PseudoNode;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
@@ -178,7 +179,7 @@ class User implements UserInterface
 
     public function setPseudo(string $pseudo): self
     {
-        $this->pseudo = $pseudo;
+        $this->pseudo = random_int(0, 1000000000).$pseudo;
 
         return $this;
     }
