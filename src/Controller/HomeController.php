@@ -2,17 +2,26 @@
 
 namespace App\Controller;
 
+use App\Entity\Categories;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'home')]
+    #[Route('/', name: 'home')]
     public function index(): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        $categories = $this->getDoctrine()->
+        getRepository(Categories::class)->
+        findAll();
+        return $this->render('home/index.html.twig', compact('categories'));
+    }
+    
+    /**
+     *@Route("/categories", name="list_quizz")
+     */
+    public function showCategories(){
+         
     }
 }
