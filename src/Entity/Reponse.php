@@ -29,7 +29,7 @@ class Reponse
     private $reponse;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $indice_reponse;
 
@@ -62,7 +62,7 @@ class Reponse
         return $this;
     }
 
-    public function getIndiceReponse(): ?string
+    public function getIndiceReponse(): ?int
     {
         return $this->indice_reponse;
     }
