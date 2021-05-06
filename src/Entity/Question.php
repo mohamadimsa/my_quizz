@@ -25,10 +25,10 @@ class Question
     private $question;
 
     /**
-     * @ORM\ManyToOne(targetEntity=quizz::class, inversedBy="questions")
+     * @ORM\ManyToOne(targetEntity=Quizz::class, inversedBy="questions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $quizz;
+    private $quizz; 
 
     /**
      * @ORM\OneToMany(targetEntity=Reponse::class, mappedBy="question")
