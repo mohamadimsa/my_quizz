@@ -12,12 +12,14 @@
 			<div class="col">
 
 				{% if questions is defined and  questions|length > 0   %}
-					{% for question in questions %}
-						
-					{% endfor %}
-				{% endif %}
+					<ul>
+						{% for question in questions %}
+							<li>{{question.question}}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
 
+				</div>
 			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}
