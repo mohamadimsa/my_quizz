@@ -6,13 +6,13 @@
 
 <div class="container-fluid">
 		<div class="row">
-
+            <div class="col-3"></div>
 
 			<div class="col">
 
 			 {% if quizzs is defined and  quizzs|length > 0   %}
 			   {% for quizz in quizzs %}
-                <a href="">{{ quizz.categories_id}} </p>
+                <a href="{{ path('show_quizz', {slug: quizz.id}) }}">{{ quizz.name}} </a>
             {% endfor %}
 			 {% endif %}
 		

@@ -20,10 +20,5 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', compact('categories'));
     }
     
-    /**
-     *@Route("/categories", name="list_quizz")
-     */
-    public function showCategories(){
-         
-    }
+    
 }

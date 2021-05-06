@@ -8,18 +8,13 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-3">
+			<h2>Categorie</h2>
             {% for categorie in categories %}
                 <a href="">{{ categorie.name}} </p>
             {% endfor %}
             </div>
 
 			<div class="col">
-
-			 {% if quizzs is defined and  quizzs|length > 0   %}
-			   {% for quizz in quizzs %}
-                <a href="">{{ quizz.categories_id}} </p>
-            {% endfor %}
-			 {% endif %}
 		
 			</div>
 		</div>
