@@ -34,7 +34,7 @@ class UserChecker implements UserCheckerInterface
         if (!$user instanceof User) {
             return;
         }
-        if (!$user->isVerified()=='1') {
+        if (!$user->getActivationToken()==null) {
             throw new CustomUserMessageAccountStatusException("Please check your email to confirm your registration before 1 hour");
         }
         
