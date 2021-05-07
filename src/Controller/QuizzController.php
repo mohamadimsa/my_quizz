@@ -103,7 +103,7 @@ class QuizzController extends AbstractController
           $score[$id_quizz]++;
       }
       else{
-          $
+          
       }
 
         

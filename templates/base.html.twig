@@ -19,7 +19,7 @@
 				<nav class="navbar navbar-expand-lg navbar-light bg-light col">
 					<a class="navbar-brand" href="{{ path('home')}}">My_quizz</a>
 					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-						<a class="link" href="{{ path('logout') }}">deconnexion</a>
+						<a class="link" href="{{ path('app_logout') }}">deconnexion</a>
 					{% else %}
 						<ul>
 							<li><a href="{{path("app_login") }}">se connecter</a></li>

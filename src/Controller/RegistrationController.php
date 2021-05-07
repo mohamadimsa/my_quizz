@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Flex\Path;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
@@ -46,6 +45,20 @@ class RegistrationController extends AbstractController
 
             // generate a signed url and email it to the user
             // do anything else you need here, like send an email
+            $message = (new \Swift_Message('Nouveau compte'))
+            // On attribue l'expéditeur
+            ->setFrom('votre@adresse.fr')
+            // On attribue le destinataire
+            ->setTo($user->getEmail())
+            // On crée le texte avec la vue
+            ->setBody(
+                $this->renderView(
+                    'registration/confirmation_email.html.twig', ['token' => $user->getActivationToken()]
+                ),
+                'text/html'
+            )
+        ;
+        $mailer->send($message);
             return $this->redirectToRoute('app_login');
         }
 
