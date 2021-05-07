@@ -37,7 +37,7 @@ class QuizzController extends AbstractController
     /**
      * @Route("/quizz/{id_quizz}", name="quizz_show")
      */
-    public function showQuizz(Request $request, QuestionRepository $questionRepository, ReponseRepository $reponse, $id_quizz, PaginatorInterface $paginator, EntityManagerInterface $em,SessionInterface $session): Response
+    public function showQuizz(Request $request, QuestionRepository $questionRepository, ReponseRepository $reponse, $id_quizz, PaginatorInterface $paginator, EntityManagerInterface $em, SessionInterface $session): Response
     {
         $donnees = $questionRepository->findBy([
             "quizz" => $id_quizz
@@ -47,6 +47,25 @@ class QuizzController extends AbstractController
             $request->query->getInt('question', 1),
             1 // Nombre de résultats par page
         );
+        $score = $session->get('score', []);
+        if ($request->query->getInt('question') > count($donnees)  ) {
+            if (!empty($request->query->getInt('id_question'))) {
+                $score[$request->query->getInt('id_question')] = $request->request->get("form", null)["reponse"];
+                $session->set("score", $score);
+            }
+            
+            if (count($session->get('score')) == count($donnees)) {
+                return $this->redirectToRoute('quizz_score',[
+                    "score" => $score = $session->get('score')
+                ]);
+            }
+        }
+        if (!empty($request->query->getInt('id_question'))) {
+            $score[$request->query->getInt('id_question')] = $request->request->get("form", null)["reponse"];
+
+        }
+
+        $session->set("score", $score);
 
         foreach ($questions as  $value) {
             $id_question = $value;
@@ -62,13 +81,19 @@ class QuizzController extends AbstractController
 
             $option[$reponsee] = $reponsee;
         }
-
-        $question_suivante = $request->query->getInt('question', 1) + 1;
+   
+        if ($request->query->getInt('question', 1) == count($donnees)) {
+            $name_btn = "Obtenir_le_Resulat";
+        }
+        else{
+            $name_btn = "Question_suivante";
+        }
 
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('quizz_show', [
                 "id_quizz" => $id_quizz,
-                "question" => $request->query->getInt('question', 1)+1
+                "question" => $request->query->getInt('question', 1) + 1,
+                "id_question" => $id_question->getId()
 
             ]))
             ->setMethod('POST')
@@ -77,36 +102,14 @@ class QuizzController extends AbstractController
                 'expanded' => true,
                 'label' => "Selectionne la bonne reponse :"
             ])
-            ->add("Question_Suivante", SubmitType::class)
+
+            ->add($name_btn, SubmitType::class)
             ->getForm();
 
         $view = $form->createView();
 
-    
-            //   $session = $request->getSession();
-      $score = $session->get('score',[]);
-     /* if ($request->request->get("form",null) !== null) {
-          $reponse_utilisateur = $request->request->get("form",null)["reponse"];
-           $score[$id_question->getId()] = $reponse_utilisateur;
 
-      
 
-         $session->set('score',$score);
-
-      //dd($session->get('score'));
-
-       
-
-      }*/
-
-      if (!empty($score[$id_question->getId()])) {
-          $score[$id_quizz]++;
-      }
-      else{
-          
-      }
-
-        
         return $this->render('quizz/quizz.html.twig', [
             'questions' => $questions,
             "reponses" => $donnees_reponse,
@@ -115,15 +118,18 @@ class QuizzController extends AbstractController
     }
 
     /**
-     * @Route("/score/{id_question}", name="quizz_score")
+     * @Route("/score", name="quizz_score")
      */
-    public function score($id_question,SessionInterface $session, Request $request){
+    public function score( SessionInterface $session, Request $request)
+    {
 
      
-      dd($session);
-      
+         dd($score = $request->get("score"));
+
+         for ($i=0; $i < count($score); $i++) { 
+             # code...
+         }
+
 
     }
-
-    
 }
