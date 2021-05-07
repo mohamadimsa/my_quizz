@@ -16,7 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Flex\Path;
 
 class QuizzController extends AbstractController
@@ -35,7 +37,7 @@ class QuizzController extends AbstractController
     /**
      * @Route("/quizz/{id_quizz}", name="quizz_show")
      */
-    public function showQuizz(Request $request, QuestionRepository $questionRepository, ReponseRepository $reponse, $id_quizz, PaginatorInterface $paginator, EntityManagerInterface $em): Response
+    public function showQuizz(Request $request, QuestionRepository $questionRepository, ReponseRepository $reponse, $id_quizz, PaginatorInterface $paginator, EntityManagerInterface $em,SessionInterface $session): Response
     {
         $donnees = $questionRepository->findBy([
             "quizz" => $id_quizz
@@ -53,8 +55,6 @@ class QuizzController extends AbstractController
             "question" => $id_question
         ]));
 
-
-
         $option = [];
         for ($i = 0; $i < count($donnees_reponse); $i++) {
 
@@ -68,24 +68,62 @@ class QuizzController extends AbstractController
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('quizz_show', [
                 "id_quizz" => $id_quizz,
-                "question" => $question_suivante
+                "question" => $request->query->getInt('question', 1)+1
 
             ]))
             ->setMethod('POST')
-            ->add("Selectionne_la_bonne_reponse_:", ChoiceType::class, [
+            ->add("reponse", ChoiceType::class, [
                 'choices' => $option,
-                'expanded' => true
+                'expanded' => true,
+                'label' => "Selectionne la bonne reponse :"
             ])
             ->add("Question_Suivante", SubmitType::class)
             ->getForm();
 
         $view = $form->createView();
 
+    
+            //   $session = $request->getSession();
+      $score = $session->get('score',[]);
+     /* if ($request->request->get("form",null) !== null) {
+          $reponse_utilisateur = $request->request->get("form",null)["reponse"];
+           $score[$id_question->getId()] = $reponse_utilisateur;
 
+      
+
+         $session->set('score',$score);
+
+      //dd($session->get('score'));
+
+       
+
+      }*/
+
+      if (!empty($score[$id_question->getId()])) {
+          $score[$id_quizz]++;
+      }
+      else{
+          $
+      }
+
+        
         return $this->render('quizz/quizz.html.twig', [
             'questions' => $questions,
             "reponses" => $donnees_reponse,
             "monformulaire" => $view
         ]);
     }
+
+    /**
+     * @Route("/score/{id_question}", name="quizz_score")
+     */
+    public function score($id_question,SessionInterface $session, Request $request){
+
+     
+      dd($session);
+      
+
+    }
+
+    
 }
