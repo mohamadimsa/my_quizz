@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello QuizzController!{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+		<div class="row">
+            <div class="col-3"></div>
+
+			<div class="col">
+
+			 {% if quizzs is defined and  quizzs|length > 0   %}
+			   {% for quizz in quizzs %}
+                <a href="{{ path('show_quizz', {slug: quizz.id}) }}">{{ quizz.name}} </a>
+            {% endfor %}
+			 {% endif %}
+		
+			</div>
+		</div>
+	</div>
+{% endblock %}

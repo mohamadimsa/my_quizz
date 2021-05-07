@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My_quizz
+{% endblock %}
+
+{% block body %}
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-3">
+				<div class="row">
+					<h2>Categorie</h2>
+					{% for categorie in categories %}
+						<a href="">{{categorie.name}}</a>
+					{% endfor %}
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

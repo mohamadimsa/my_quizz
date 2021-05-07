@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello QuizzController!{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+
+	<div class="row contenue">
+		<div class="col-3 nav-categories"></div>
+
+		<div class="col contenue-central">
+			<div class="row question">
+               {% if questions is defined and  questions|length > 0   %}
+					<ul>
+						{% for question in questions %}
+							<h2>{{question.question}}</h2>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			</div>
+
+
+	        <div class="row reponse">
+				<ul>
+			  {{form(monformulaire)}}
+				</ul>
+			</div>
+
+		</div>
+	</div>
+</div>
+{% endblock %}
