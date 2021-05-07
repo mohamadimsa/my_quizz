@@ -26,13 +26,13 @@ class Historique
     private $Users;
 
     /**
-     * @ORM\ManyToOne(targetEntity=quizz::class, inversedBy="historiques")
+     * @ORM\ManyToOne(targetEntity=Quizz::class, inversedBy="historiques")
      * @ORM\JoinColumn(nullable=false)
      */
     private $quizz;
 
     /**
-     * @ORM\ManyToOne(targetEntity=categories::class, inversedBy="historiques")
+     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="historiques")
      * @ORM\JoinColumn(nullable=false)
      */
     private $categories;

@@ -6,10 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\CssSelector\Node\PseudoNode;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -67,19 +71,24 @@ class User implements UserInterface
      */
     private $lastconnect;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $email_verif;
+
 
     /**
      * @ORM\OneToMany(targetEntity=Historique::class, mappedBy="Users")
      */
     private $historiques;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
     public function __construct()
     {
         $this->historiques = new ArrayCollection();
+        $this->create_at=new \DateTime('now');
+        $this->update_at = new \DateTime("now");
+        $this->lastconnect = new \DateTime("now");
     }
 
     public function getId(): ?int
@@ -170,7 +179,7 @@ class User implements UserInterface
 
     public function setPseudo(string $pseudo): self
     {
-        $this->pseudo = $pseudo;
+        $this->pseudo = random_int(0, 100).$pseudo;
 
         return $this;
     }
@@ -206,7 +215,7 @@ class User implements UserInterface
 
     public function setUpdateAt(\DateTimeInterface $update_at): self
     {
-        $this->update_at = $update_at;
+        $this->update_at = new \DateTime("now");
 
         return $this;
     }
@@ -216,9 +225,10 @@ class User implements UserInterface
         return $this->create_at;
     }
 
+    
     public function setCreateAt(\DateTimeInterface $create_at): self
     {
-        $this->create_at = $create_at;
+        $this->create_at = new \DateTime("now");
 
         return $this;
     }
@@ -235,17 +245,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getEmailVerif(): ?\DateTimeInterface
-    {
-        return $this->email_verif;
-    }
 
-    public function setEmailVerif(\DateTimeInterface $email_verif): self
-    {
-        $this->email_verif = $email_verif;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Historique[]
@@ -273,6 +273,18 @@ class User implements UserInterface
                 $historique->setUsers(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

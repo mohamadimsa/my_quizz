@@ -54,35 +54,32 @@ class QuizzController extends AbstractController
         ]));
 
 
-        
- $option = [];
-        for ($i=0; $i < count($donnees_reponse) ; $i++) { 
 
-            $reponsee = str_replace ( '.' , '~' , $donnees_reponse[$i]->getReponse());
-            
+        $option = [];
+        for ($i = 0; $i < count($donnees_reponse); $i++) {
+
+            $reponsee = str_replace('.', '~', $donnees_reponse[$i]->getReponse());
+
             $option[$reponsee] = $reponsee;
         }
 
-         $question_suivante = $request->query->getInt('question',1)+1;
+        $question_suivante = $request->query->getInt('question', 1) + 1;
 
-       $form = $this->createFormBuilder()
-               ->setAction($this->generateUrl('quizz_show',[
-                   "id_quizz" => $id_quizz,
-                   "question" => $question_suivante
+        $form = $this->createFormBuilder()
+            ->setAction($this->generateUrl('quizz_show', [
+                "id_quizz" => $id_quizz,
+                "question" => $question_suivante
 
-               ]))
-               ->setMethod('POST')
-               ->add("Selectionne_la_bonne_reponse_:",ChoiceType::class,[
-                   'choices'=> $option,
-                   'expanded'=> true
-               ])
-               ->add("Question_Suivante",SubmitType::class)
-               ->getForm()
-        ;
+            ]))
+            ->setMethod('POST')
+            ->add("Selectionne_la_bonne_reponse_:", ChoiceType::class, [
+                'choices' => $option,
+                'expanded' => true
+            ])
+            ->add("Question_Suivante", SubmitType::class)
+            ->getForm();
 
-       $view = $form->createView();
-
-
+        $view = $form->createView();
 
 
         return $this->render('quizz/quizz.html.twig', [
