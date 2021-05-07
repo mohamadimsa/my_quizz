@@ -179,7 +179,7 @@ class User implements UserInterface
 
     public function setPseudo(string $pseudo): self
     {
-        $this->pseudo = random_int(0, 1000000000).$pseudo;
+        $this->pseudo = random_int(0, 100).$pseudo;
 
         return $this;
     }
