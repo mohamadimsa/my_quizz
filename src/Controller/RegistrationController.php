@@ -56,7 +56,7 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -83,14 +83,5 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_register');
     }
-    #[Route('/sendback/email', name: 'sendback')]
-    public function sendback(){
-        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('mahamat@gmail.com', 'Mahamat'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
-    }
+   
 }

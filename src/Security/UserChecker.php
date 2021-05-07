@@ -24,21 +24,19 @@ class UserChecker implements UserCheckerInterface
         if (!$user instanceof User) {
             return;
         }
-
-   
-        
-       
+     
 
     }
 
     public function checkPostAuth(UserInterface $user)
     {
+    
         if (!$user instanceof User) {
             return;
         }
-
         if (!$user->isVerified()=='1') {
             throw new CustomUserMessageAccountStatusException("Please check your email to confirm your registration before 1 hour");
         }
+        
     }
 }
