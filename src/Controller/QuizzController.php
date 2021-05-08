@@ -56,7 +56,7 @@ class QuizzController extends AbstractController
             
             if (count($session->get('score')) == count($donnees)) {
                 return $this->redirectToRoute('quizz_score', [
-                    "score" => $score = $session->get('score')
+                   // "score" => $score = $session->get('score')
                 ]);
             }
         }
@@ -184,7 +184,7 @@ class QuizzController extends AbstractController
               $session->set('score_final',$donnees_final);
               $score= $session->get('score_final');
         
-        
+        dd($score);
         return $this->render('quizz/resultat.html.twig', [
             "result" => $score,
             "score" => $score_pourcentage,
