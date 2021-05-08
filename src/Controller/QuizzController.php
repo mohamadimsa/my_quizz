@@ -48,21 +48,20 @@ class QuizzController extends AbstractController
             1 // Nombre de résultats par page
         );
         $score = $session->get('score', []);
-        if ($request->query->getInt('question') > count($donnees)  ) {
+        if ($request->query->getInt('question') > count($donnees)) {
             if (!empty($request->query->getInt('id_question'))) {
                 $score[$request->query->getInt('id_question')] = $request->request->get("form", null)["reponse"];
                 $session->set("score", $score);
             }
             
             if (count($session->get('score')) == count($donnees)) {
-                return $this->redirectToRoute('quizz_score',[
+                return $this->redirectToRoute('quizz_score', [
                     "score" => $score = $session->get('score')
                 ]);
             }
         }
         if (!empty($request->query->getInt('id_question'))) {
             $score[$request->query->getInt('id_question')] = $request->request->get("form", null)["reponse"];
-
         }
 
         $session->set("score", $score);
@@ -81,11 +80,10 @@ class QuizzController extends AbstractController
 
             $option[$reponsee] = $reponsee;
         }
-   
+
         if ($request->query->getInt('question', 1) == count($donnees)) {
             $name_btn = "Obtenir_le_Resulat";
-        }
-        else{
+        } else {
             $name_btn = "Question_suivante";
         }
 
@@ -108,7 +106,8 @@ class QuizzController extends AbstractController
 
         $view = $form->createView();
 
-
+        $score = $session->get('score_final', []);
+        $session->set("score_final",[]);
 
         return $this->render('quizz/quizz.html.twig', [
             'questions' => $questions,
@@ -120,16 +119,85 @@ class QuizzController extends AbstractController
     /**
      * @Route("/score", name="quizz_score")
      */
-    public function score( SessionInterface $session, Request $request)
+    public function score(SessionInterface $session, Request $request,ReponseRepository $reponseRepository,QuestionRepository $questionRepository)
     {
 
-     
-         dd($score = $request->get("score"));
 
-         for ($i=0; $i < count($score); $i++) { 
-             # code...
-         }
+        $score = $session->get("score");
+        
 
+        $verifQuestion = [];
+        $question_positif = 0;
+        foreach($score as $key => $value){
 
+            $donnees = $reponseRepository->findBy([
+                "reponse" => $value,
+                "question" => $key
+            ]);
+            foreach ($donnees as $value) {
+                if ($value->getIndiceReponse() === 0) {
+                    $verifQuestion[$value->getQuestion()->getId()] = 0;
+                
+                }
+                else{
+                    $verifQuestion[$value->getQuestion()->getId()] = 1;
+                    $question_positif++;
+                }
+            }
+        }
+        $score_pourcentage = $question_positif * count($score);
+       
+        $donnees_final= [];
+        $comp =0;
+        foreach($score as $name_rep){
+            $comp++;
+            $donnees_final[$comp]["repUser"] = $name_rep;
+
+        }
+        $tab1 = 0;
+        foreach($verifQuestion as $key => $value){
+            $tab1++;
+            $donnees_final[$tab1]["result_repUser"] = $value;
+           
+
+            $question = $questionRepository->findBy([
+                  "id" => $key
+                ]
+            );
+            $donnees_reponse = $reponseRepository->findBy(([
+                "indice_reponse" => 1,
+                "question"=> $key
+            ]));
+            foreach($donnees_reponse as $reps){
+
+                $donnees_final[$tab1]["corect"]= $reps->getReponse();
+            }
+            
+            foreach($question as $questions){
+
+                $donnees_final[$tab1]["question"] = $questions->getQuestion();
+            
+            }
+            
+        }
+              $session->set('score_final',$donnees_final);
+              $score= $session->get('score_final');
+        
+        
+        return $this->render('quizz/resultat.html.twig', [
+            "result" => $score,
+            "score" => $score_pourcentage,
+        ]);
+      
+       
+       
+    }
+
+    /**
+     * @Route("/resulat", "show_score")
+     */
+    public function show_result($donnees){
+
+       
     }
 }

@@ -1,0 +1,28 @@
+{% block body %}
+
+<div class="container-fluid">
+
+	<div class="row contenue">
+		<div class="col-3 nav-categories"></div>
+
+		<div class="col contenue-central">
+		<h3>vous avez eu un score de {{score}} %</h3>
+			<div class="row question">
+             {% for results in result %}
+
+			 {{dump(results)}}
+				
+			 {% endfor %}
+			</div>
+
+
+	        <div class="row reponse">
+				<ul>
+			  
+				</ul>
+			</div>
+
+		</div>
+	</div>
+</div>
+{% endblock %}
