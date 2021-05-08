@@ -33,6 +33,7 @@ class Reponse
      */
     private $indice_reponse;
 
+   
     public function getId(): ?int
     {
         return $this->id;
@@ -73,4 +74,6 @@ class Reponse
 
         return $this;
     }
+
+   
 }

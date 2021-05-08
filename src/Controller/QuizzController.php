@@ -176,6 +176,7 @@ class QuizzController extends AbstractController
             foreach($question as $questions){
 
                 $donnees_final[$tab1]["question"] = $questions->getQuestion();
+                $donnees_final[$tab1]["index_ques"] = $questions->getIndexQuestion();
             
             }
             
