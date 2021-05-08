@@ -184,7 +184,6 @@ class QuizzController extends AbstractController
               $session->set('score_final',$donnees_final);
               $score= $session->get('score_final');
         
-        dd($score);
         return $this->render('quizz/resultat.html.twig', [
             "result" => $score,
             "score" => $score_pourcentage,
@@ -195,9 +194,9 @@ class QuizzController extends AbstractController
     }
 
     /**
-     * @Route("/resulat", "show_score")
+     * @Route("/quizz/create", "quizz_create")
      */
-    public function show_result($donnees){
+    public function create(){
 
        
     }
