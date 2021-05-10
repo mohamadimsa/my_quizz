@@ -45,6 +45,12 @@ class Categories
         return $this->id;
     }
 
+    public function setId($id){
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -65,14 +71,14 @@ class Categories
         return $this->quizzs;
     }
 
-    public function addQuizz(Quizz $quizz): self
-    {
-        if (!$this->quizzs->contains($quizz)) {
-            $this->quizzs[] = $quizz;
-            $quizz->setCategories($this);
-        }
+    
 
-        return $this;
+
+    public function addCategories(int $id , CategoriesRepository $categoriesRepository){
+
+           $categorieId = $categoriesRepository->find($id);
+                $this->name = $categorieId->getName();
+           return $this->id = $categorieId->getId();
     }
 
     public function removeQuizz(Quizz $quizz): self

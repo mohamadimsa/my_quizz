@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Categories;
 use App\Entity\Question;
 use App\Entity\Quizz;
+use App\Entity\Reponse;
+use App\Repository\CategoriesRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\QuizzRepository;
 use App\Repository\ReponseRepository;
@@ -35,14 +38,72 @@ class QuizzController extends AbstractController
     /**
      * @Route("/create/quizz", "quizz_create")
      */
-    public function create()
+    public function create(CategoriesRepository $categoriesRepository, Request $request ,EntityManagerInterface $em )
     {
+
         
-        $comp = 0;
+        if ($request->get("form") !== null AND count($request->get("form"))) {
+            $donnees = $request->get("form");
+
+         // dd($donnees);
+
+          $categories = $categoriesRepository->find($donnees["categorie"]);
+           
+          // dd($categories);
+            
+            $quizz = new Quizz;
+            $quizz->setName($donnees["name_quizz"]);
+            $quizz->setCategories($categories);
+            $em->persist($quizz);
+        
+            for ($i=1; $i < 11 ; $i++) { 
+                $question = new Question ; 
+            $question->setQuestion($donnees["question_$i"]);
+            $question->setQuizz($quizz);
+            $question->setIndexQuestion($i);
+            $em->persist($question);
+            for ($j=1; $j < 5 ; $j++) { 
+                $reponse =new Reponse ;
+               
+                $reponse->setReponse($donnees["rep_$j"."_$i"]);
+                if($donnees["corect_reponse$i"] !== "rep_$j"."_$i" ){
+                    $reponse->setIndiceReponse(0);
+                }
+                else{
+                    $reponse->setIndiceReponse(1);
+                }
+                $reponse->setQuestion($question);
+                $em->persist($reponse);
+                
+
+               // $reponse->setIndiceReponse(int)
+            }
+            }
+            
+            $em->flush();
+            
+        
+          
+        }
+
+      
+        $categories_donnee = $categoriesRepository->findAll();
+        $list =[];
+        $list[""] = "";
+
+         for ($i=0; $i < count($categories_donnee); $i++) { 
+             $list[$categories_donnee[$i]->getName()] = $categories_donnee[$i]->getId();
+         }
+
         $form = $this->createFormBuilder()
             ->add("name_quizz", TextType::class,[
                 "label" => "Nom du quizz : "
+            ])
+            ->add("categorie",ChoiceType::class,[
+                 "choices" => $list,
+                 "label" => "Selectionner une categorie :"
             ]);
+        ;
 
         for ($i = 1; $i < 11; $i++) {
 
@@ -71,6 +132,7 @@ class QuizzController extends AbstractController
             ;
             
         }
+        $form->add("Cree_le_Quizz", SubmitType::class);
 
         $view =  $form->getForm()->createView();
 

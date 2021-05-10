@@ -68,7 +68,7 @@ class Reponse
         return $this->indice_reponse;
     }
 
-    public function setIndiceReponse(string $indice_reponse): self
+    public function setIndiceReponse(int $indice_reponse): self
     {
         $this->indice_reponse = $indice_reponse;
 
