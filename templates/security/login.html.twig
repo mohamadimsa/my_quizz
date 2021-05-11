@@ -9,7 +9,7 @@
         {% endfor %}
 {% for message in app.flashes('warning') %}
             <div class="alert alert-warning">
-                {{ message }}
+                {{ message|raw }}
             </div>
         {% endfor %}
 <form method="post">

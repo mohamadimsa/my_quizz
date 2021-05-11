@@ -38,6 +38,11 @@ public function editUser(User $user, Request $request)
  * @Route("/utilisateurs/delete/{id}", name="supprimer_utilisateur")
  */
 public function deleteUser(User $user, Request $request){
-    
+    $users = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $user]);
+    $entityManager = $this->getDoctrine()->getManager();
+    $entityManager->remove($users);
+    $entityManager->flush($users);
+    $this->addFlash('succes', 'Utilisateur effacé avec succés');
+        return $this->redirectToRoute('utilisateurs');
 }
 }

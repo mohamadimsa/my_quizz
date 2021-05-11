@@ -208,4 +208,35 @@ public function resetPassword(Request $request, string $token, UserPasswordEncod
     }
 
 }
+/**
+ * @Route("/send_back/{id}", name="send_back")
+ */
+public function send_back(User $user,Request $request,\Swift_Mailer $mailer){
+    $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $user]);
+    $user->setActivationToken(md5(uniqid()));
+    $entityManager = $this->getDoctrine()->getManager();
+    $entityManager->persist($user);
+    $entityManager->flush();
+    $message = (new \Swift_Message('Nouveau compte'))
+    // On attribue l'expéditeur
+    ->setFrom('votre@adresse.fr')
+    // On attribue le destinataire
+    ->setTo($user->getEmail())
+    // On crée le texte avec la vue
+    ->setBody(
+        $this->renderView(
+            'registration/send_email.html.twig', ['token' => $user->getActivationToken()]
+        ),
+        'text/html'
+    );
+
+    $mailer->send($message);
+
+    // On crée le message flash
+    $this->addFlash('success', "Une message d'activation viens de vous être envoyé");
+    return $this->redirectToRoute('app_login');
+    }
+
+
+
 }
