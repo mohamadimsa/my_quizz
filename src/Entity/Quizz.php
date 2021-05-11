@@ -97,15 +97,7 @@ class Quizz
         return $this->questions;
     }
 
-    public function addQuestion(Question $question): self
-    {
-        if (!$this->questions->contains($question)) {
-            $this->questions[] = $question;
-            $question->setQuizz($this);
-        }
 
-        return $this;
-    }
 
     public function removeQuestion(Question $question): self
     {

@@ -38,99 +38,93 @@ class QuizzController extends AbstractController
     /**
      * @Route("/create/quizz", "quizz_create")
      */
-    public function create(CategoriesRepository $categoriesRepository, Request $request ,EntityManagerInterface $em )
+    public function create(CategoriesRepository $categoriesRepository, Request $request, EntityManagerInterface $em)
     {
 
-        
-        if ($request->get("form") !== null AND count($request->get("form"))) {
+
+        if ($request->get("form") !== null and count($request->get("form"))) {
             $donnees = $request->get("form");
 
-         // dd($donnees);
+            // dd($donnees);
 
-          $categories = $categoriesRepository->find($donnees["categorie"]);
-           
-          // dd($categories);
-            
+            $categories = $categoriesRepository->find($donnees["categorie"]);
+
+            // dd($categories);
+
             $quizz = new Quizz;
             $quizz->setName($donnees["name_quizz"]);
             $quizz->setCategories($categories);
             $em->persist($quizz);
-        
-            for ($i=1; $i < 11 ; $i++) { 
-                $question = new Question ; 
-            $question->setQuestion($donnees["question_$i"]);
-            $question->setQuizz($quizz);
-            $question->setIndexQuestion($i);
-            $em->persist($question);
-            for ($j=1; $j < 5 ; $j++) { 
-                $reponse =new Reponse ;
-               
-                $reponse->setReponse($donnees["rep_$j"."_$i"]);
-                if($donnees["corect_reponse$i"] !== "rep_$j"."_$i" ){
-                    $reponse->setIndiceReponse(0);
-                }
-                else{
-                    $reponse->setIndiceReponse(1);
-                }
-                $reponse->setQuestion($question);
-                $em->persist($reponse);
-                
 
-               // $reponse->setIndiceReponse(int)
+            for ($i = 1; $i < 11; $i++) {
+                $question = new Question;
+                $question->setQuestion($donnees["question_$i"]);
+                $question->setQuizz($quizz);
+                $question->setIndexQuestion($i);
+                $em->persist($question);
+                for ($j = 1; $j < 5; $j++) {
+                    $reponse = new Reponse;
+
+                    $reponse->setReponse($donnees["rep_$j" . "_$i"]);
+                    if ($donnees["corect_reponse$i"] !== "rep_$j" . "_$i") {
+                        $reponse->setIndiceReponse(0);
+                    } else {
+                        $reponse->setIndiceReponse(1);
+                    }
+                    $reponse->setQuestion($question);
+                    $em->persist($reponse);
+
+
+                    // $reponse->setIndiceReponse(int)
+                }
             }
-            }
-            
+
             $em->flush();
-            
-        
-          
         }
 
-      
+
         $categories_donnee = $categoriesRepository->findAll();
-        $list =[];
+        $list = [];
         $list[""] = "";
 
-         for ($i=0; $i < count($categories_donnee); $i++) { 
-             $list[$categories_donnee[$i]->getName()] = $categories_donnee[$i]->getId();
-         }
+        for ($i = 0; $i < count($categories_donnee); $i++) {
+            $list[$categories_donnee[$i]->getName()] = $categories_donnee[$i]->getId();
+        }
 
         $form = $this->createFormBuilder()
-            ->add("name_quizz", TextType::class,[
+            ->add("name_quizz", TextType::class, [
                 "label" => "Nom du quizz : "
             ])
-            ->add("categorie",ChoiceType::class,[
-                 "choices" => $list,
-                 "label" => "Selectionner une categorie :"
-            ]);
-        ;
+            ->add("categorie", ChoiceType::class, [
+                "choices" => $list,
+                "label" => "Selectionner une categorie :"
+            ]);;
 
         for ($i = 1; $i < 11; $i++) {
 
             $form->add("question_$i", TextType::class)
-             ->add("rep_1_$i",TextType::class,[
-                 "label"=> "choix :1"
-             ])
-            
-             ->add("rep_2_$i",TextType::class,[
-                 "label"=> "choix :2"
-             ])
-             ->add("rep_3_$i",TextType::class,[
-                 "label"=> "choix :3"
-             ])
-             ->add("rep_4_$i",TextType::class,[
-                 "label"=> "choix :4"
-             ])
-             ->add("corect_reponse$i", ChoiceType::class, [
-                'choices' => ["choix 1" => "rep_1_$i",
-                              "choix 2" => "rep_2_$i",
-                              "choix 3" => "rep_3_$i",
-                              "choix 4" => "rep_4_$i"
-                             ],
-                'label' => "Quelle est la bonne reponse  ? : "
-            ])
-            ;
-            
+                ->add("rep_1_$i", TextType::class, [
+                    "label" => "choix :1"
+                ])
+
+                ->add("rep_2_$i", TextType::class, [
+                    "label" => "choix :2"
+                ])
+                ->add("rep_3_$i", TextType::class, [
+                    "label" => "choix :3"
+                ])
+                ->add("rep_4_$i", TextType::class, [
+                    "label" => "choix :4"
+                ])
+                ->add("corect_reponse$i", ChoiceType::class, [
+                    'choices' => [
+                        "choix 1" => "rep_1_$i",
+                        "choix 2" => "rep_2_$i",
+                        "choix 3" => "rep_3_$i",
+                        "choix 4" => "rep_4_$i"
+                    ],
+                    'label' => "Quelle est la bonne reponse  ? : "
+                ]);
         }
         $form->add("Cree_le_Quizz", SubmitType::class);
 
@@ -154,7 +148,9 @@ class QuizzController extends AbstractController
             $request->query->getInt('question', 1),
             1 // Nombre de résultats par page
         );
+        
         $score = $session->get('score', []);
+        dd($score);
         if ($request->query->getInt('question') > count($donnees)) {
             if (!empty($request->query->getInt('id_question'))) {
                 $score[$request->query->getInt('id_question')] = $request->request->get("form", null)["reponse"];
@@ -286,7 +282,7 @@ class QuizzController extends AbstractController
         }
         $session->set('score_final', $donnees_final);
         $score = $session->get('score_final');
-
+        $session->set('score', []);
         return $this->render('quizz/resultat.html.twig', [
             "result" => $score,
             "score" => $score_pourcentage,

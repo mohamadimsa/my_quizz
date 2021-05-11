@@ -73,14 +73,6 @@ class Categories
 
     
 
-
-    public function addCategories(int $id , CategoriesRepository $categoriesRepository){
-
-           $categorieId = $categoriesRepository->find($id);
-                $this->name = $categorieId->getName();
-           return $this->id = $categorieId->getId();
-    }
-
     public function removeQuizz(Quizz $quizz): self
     {
         if ($this->quizzs->removeElement($quizz)) {
