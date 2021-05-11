@@ -150,7 +150,6 @@ class QuizzController extends AbstractController
         );
         
         $score = $session->get('score', []);
-        dd($score);
         if ($request->query->getInt('question') > count($donnees)) {
             if (!empty($request->query->getInt('id_question'))) {
                 $score[$request->query->getInt('id_question')] = $request->request->get("form", null)["reponse"];

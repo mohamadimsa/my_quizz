@@ -4,21 +4,33 @@ namespace App\Controller;
 
 use App\Entity\Categories;
 use App\Entity\Quizz;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use App\Repository\CategoriesRepository;
 use App\Repository\QuizzRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(): Response
+    public function index( Request $request ,SessionInterface $session): Response
+
     {
+
+      
+          
+             
+          
         $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
 
         return $this->render('home/index.html.twig', compact('categories'));
     }
+
+    
 
     /**
      *@Route("/categorie/{name}" ,"home_categorie")

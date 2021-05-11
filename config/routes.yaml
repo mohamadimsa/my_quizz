@@ -2,3 +2,8 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
+share:
+    path:       /oubli-pass/{token}
+    controller: App\Controller\RegistrationController::oubli-pass
+    requirements:
+        token: .+

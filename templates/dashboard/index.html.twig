@@ -12,6 +12,9 @@
             You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('admin') }}">ADMIN</a>
+{% endif %}
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
