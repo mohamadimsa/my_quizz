@@ -18,26 +18,23 @@ class Reponsehistorique
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=historique::class, inversedBy="reponsehistoriques")
+     * @ORM\ManyToOne(targetEntity=Historique::class, inversedBy="reponsehistoriques")
      * @ORM\JoinColumn(nullable=false)
      */
     private $historique;
 
     /**
-     * @ORM\ManyToOne(targetEntity=question::class, inversedBy="reponsehistoriques")
+     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="reponsehistoriques")
      * @ORM\JoinColumn(nullable=false)
      */
     private $question;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Reponse::class, inversedBy="reponsehistoriques")
      */
-    private $reponseUser;
+    private $reponse;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+  
 
     public function getHistorique(): ?historique
     {
@@ -63,15 +60,17 @@ class Reponsehistorique
         return $this;
     }
 
-    public function getReponseUser(): ?string
+    public function getReponseuser(): ?reponse
     {
-        return $this->reponseUser;
+        return $this->reponse;
     }
 
-    public function setReponseUser(string $reponseUser): self
+    public function setReponseuser(?reponse $reponseuser): self
     {
-        $this->reponseUser = $reponseUser;
+        $this->reponse = $reponseuser;
 
         return $this;
     }
+
+
 }

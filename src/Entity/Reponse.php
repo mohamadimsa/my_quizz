@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReponseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,16 @@ class Reponse
      * @ORM\Column(type="integer")
      */
     private $indice_reponse;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reponsehistorique::class, mappedBy="reponseuser")
+     */
+    private $reponsehistoriques;
+
+    public function __construct()
+    {
+        $this->reponsehistoriques = new ArrayCollection();
+    }
 
    
     public function getId(): ?int
@@ -71,6 +83,36 @@ class Reponse
     public function setIndiceReponse(int $indice_reponse): self
     {
         $this->indice_reponse = $indice_reponse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reponsehistorique[]
+     */
+    public function getReponsehistoriques(): Collection
+    {
+        return $this->reponsehistoriques;
+    }
+
+    public function addReponsehistorique(Reponsehistorique $reponsehistorique): self
+    {
+        if (!$this->reponsehistoriques->contains($reponsehistorique)) {
+            $this->reponsehistoriques[] = $reponsehistorique;
+            $reponsehistorique->setReponseuser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponsehistorique(Reponsehistorique $reponsehistorique): self
+    {
+        if ($this->reponsehistoriques->removeElement($reponsehistorique)) {
+            // set the owning side to null (unless already changed)
+            if ($reponsehistorique->getReponseuser() === $this) {
+                $reponsehistorique->setReponseuser(null);
+            }
+        }
 
         return $this;
     }

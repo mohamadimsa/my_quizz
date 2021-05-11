@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Categories;
+use App\Entity\Historique;
 use App\Entity\Question;
 use App\Entity\Quizz;
 use App\Entity\Reponse;
+use App\Entity\Reponsehistorique;
+use App\Entity\User;
 use App\Repository\CategoriesRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\QuizzRepository;
 use App\Repository\ReponseRepository;
-use Doctrine\ORM\EntityManager;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -140,6 +143,7 @@ class QuizzController extends AbstractController
      */
     public function showQuizz(Request $request, QuestionRepository $questionRepository, ReponseRepository $reponse, $id_quizz, PaginatorInterface $paginator, EntityManagerInterface $em, SessionInterface $session): Response
     {
+        
         $donnees = $questionRepository->findBy([
             "quizz" => $id_quizz
         ]);
@@ -150,6 +154,10 @@ class QuizzController extends AbstractController
         );
         
         $score = $session->get('score', []);
+        if (count($score)> 10) {
+            $session->set('score', []);
+        }
+        
         if ($request->query->getInt('question') > count($donnees)) {
             if (!empty($request->query->getInt('id_question'))) {
                 $score[$request->query->getInt('id_question')] = $request->request->get("form", null)["reponse"];
@@ -207,10 +215,8 @@ class QuizzController extends AbstractController
             ->getForm();
 
         $view = $form->createView();
-
         $score = $session->get('score_final', []);
         $session->set("score_final", []);
-
         return $this->render('quizz/quizz.html.twig', [
             'questions' => $questions,
             "reponses" => $donnees_reponse,
@@ -221,7 +227,7 @@ class QuizzController extends AbstractController
     /**
      * @Route("/score", name="quizz_score")
      */
-    public function score(SessionInterface $session, Request $request, ReponseRepository $reponseRepository, QuestionRepository $questionRepository)
+    public function score(UserRepository $utilisateur,SessionInterface $session, Request $request, ReponseRepository $reponseRepository, QuestionRepository $questionRepository,EntityManagerInterface $em, QuizzRepository $quizzRepository, CategoriesRepository $categoriesRepository)
     {
 
 
@@ -230,6 +236,7 @@ class QuizzController extends AbstractController
 
         $verifQuestion = [];
         $question_positif = 0;
+        
         foreach ($score as $key => $value) {
 
             $donnees = $reponseRepository->findBy([
@@ -246,7 +253,69 @@ class QuizzController extends AbstractController
             }
         }
         $score_pourcentage = $question_positif * count($score);
+        
+        /**envois dans la bases de donner historique */
+        foreach ($score as $key => $value) {
+            $id_question = $key;
+        }
+        $cat_temp = $questionRepository->findOneBy([
+            "id" => $id_question
+        ])->getId();
 
+        $id_quizz = $questionRepository->findOneBy([
+            "id"=> $cat_temp
+        ])->getQuizz()->getId();
+
+        $id_cate = $quizzRepository->findOneBy([
+            "id"=> $id_quizz
+        ])->getCategories()->getId();
+
+
+
+        $categories = $categoriesRepository->find($id_quizz);
+        $quizz = $quizzRepository->find($id_cate);
+        
+
+
+           $user = $this->getUser();
+            if ($user !== null) {
+                $users = $utilisateur->find($user->getId());
+                $historique = new Historique ;
+                $historique->setCategories($categories);
+                $historique->setQuizz($quizz);
+                $historique->setUsers($users);
+                $historique->setDate(new \DateTime());
+                $historique->setScore( (string) $score_pourcentage);
+                $em->persist($historique);
+        
+                
+                $rephistorique = new Reponsehistorique;
+               // dd($score);
+               $idQues =[];
+               $idRep = [];
+               foreach($score as $key=> $value){
+                  $idQues[] = $key;
+                  $idRep[] = $value;
+
+               }
+               $tes =[];
+                for ($i=0; $i < count($idQues) ; $i++) { 
+                    
+                    $question = $questionRepository->find($idQues[$i]);
+                    $reponse = $reponseRepository->findOneBy([
+                        "reponse" => $idRep[$i]
+                    ]);
+                    $test[]=$reponse;
+                    $rephistorique->setHistorique($historique);
+                    $rephistorique->setQuestion($question);
+                    $rephistorique->setReponseuser($reponse);
+                   $em->persist($rephistorique);
+                }
+                $em->flush();
+               
+            }
+
+        /**fin de l'envois */
         $donnees_final = [];
         $comp = 0;
         foreach ($score as $name_rep) {
@@ -279,9 +348,11 @@ class QuizzController extends AbstractController
                 $donnees_final[$tab1]["index_ques"] = $questions->getIndexQuestion();
             }
         }
+
+      
         $session->set('score_final', $donnees_final);
         $score = $session->get('score_final');
-        $session->set('score', []);
+       // $session->set('score', []);
         return $this->render('quizz/resultat.html.twig', [
             "result" => $score,
             "score" => $score_pourcentage,
