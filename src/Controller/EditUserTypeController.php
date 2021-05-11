@@ -34,4 +34,10 @@ public function editUser(User $user, Request $request)
         'userForm' => $form->createView(),
     ]);
 }
+   /**
+ * @Route("/utilisateurs/delete/{id}", name="supprimer_utilisateur")
+ */
+public function deleteUser(User $user, Request $request){
+    
+}
 }
