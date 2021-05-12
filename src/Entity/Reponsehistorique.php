@@ -24,16 +24,13 @@ class Reponsehistorique
     private $historique;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="reponsehistoriques")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="json")
      */
-    private $question;
+    private $reponse = [];
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Reponse::class, inversedBy="reponsehistoriques")
-     */
-    private $reponse;
+   
 
+    
   
 
     public function getHistorique(): ?historique
@@ -48,29 +45,22 @@ class Reponsehistorique
         return $this;
     }
 
-    public function getQuestion(): ?question
-    {
-        return $this->question;
-    }
-
-    public function setQuestion(?question $question): self
-    {
-        $this->question = $question;
-
-        return $this;
-    }
-
-    public function getReponseuser(): ?reponse
+    public function getReponse(): ?array
     {
         return $this->reponse;
     }
 
-    public function setReponseuser(?reponse $reponseuser): self
+    public function setReponse(array $reponse): self
     {
-        $this->reponse = $reponseuser;
+        $this->reponse = $reponse;
 
         return $this;
     }
+
+   
+
+
+   
 
 
 }

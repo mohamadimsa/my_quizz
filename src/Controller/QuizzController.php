@@ -326,35 +326,23 @@ class QuizzController extends AbstractController
         
                 
                 $rephistorique = new Reponsehistorique;
-               // dd($score);
-               $idQues =[];
-               $idRep = [];
-               foreach($score as $key=> $value){
-                  $idQues[] = $key;
-                  $idRep[] = $value;
-
-               }
-               $tes =[];
-                for ($i=0; $i < count($idQues) ; $i++) { 
-                    
-                    $question = $questionRepository->find($idQues[$i]);
-                    $reponse = $reponseRepository->findOneBy([
-                        "reponse" => $idRep[$i]
-                    ]);
-                    $test[]=$reponse;
-                    $rephistorique->setHistorique($historique);
-                    $rephistorique->setQuestion($question);
-                    $rephistorique->setReponseuser($reponse);
+                $rephistorique->setHistorique($historique);
+                $rephistorique->setReponse($donnees_final);
                    $em->persist($rephistorique);
-                }
+                
                 $em->flush();
                
             }
+            else{
+                //code historique cookie
+            }
 
         /**fin de l'envois */
+
+
+
         $score = $session->get('score_final');
        // $session->set('score', []);
-       $json = json_encode($score, JSON_FORCE_OBJECT);
        
        $session->set('score_final', $donnees_final);
         return $this->render('quizz/resultat.html.twig', [
