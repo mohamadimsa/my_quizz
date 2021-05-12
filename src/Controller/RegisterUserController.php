@@ -37,6 +37,7 @@ class RegisterUserController extends AbstractController
             $entityManager->flush();
        
     }
+    $this->addFlash('success', 'Utilisateur ajouté avec succès');
     return $this->render('admin/register_user.html.twig', [
         'registerUserType' => $form->createView(),
     ]);
