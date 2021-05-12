@@ -254,8 +254,44 @@ class QuizzController extends AbstractController
         }
         $score_pourcentage = $question_positif * count($score);
         
-        /**envois dans la bases de donner historique */
-        foreach ($score as $key => $value) {
+       
+        $donnees_final = [];
+        $comp = 0;
+        foreach ($score as $name_rep) {
+            $comp++;
+            $donnees_final[$comp]["repUser"] = $name_rep;
+        }
+        $tab1 = 0;
+        foreach ($verifQuestion as $key => $value) {
+            $tab1++;
+            $donnees_final[$tab1]["result_repUser"] = $value;
+
+
+            $question = $questionRepository->findBy(
+                [
+                    "id" => $key
+                ]
+            );
+            $donnees_reponse = $reponseRepository->findBy(([
+                "indice_reponse" => 1,
+                "question" => $key
+            ]));
+            foreach ($donnees_reponse as $reps) {
+
+                $donnees_final[$tab1]["corect"] = $reps->getReponse();
+            }
+
+            foreach ($question as $questions) {
+
+                $donnees_final[$tab1]["question"] = $questions->getQuestion();
+                $donnees_final[$tab1]["index_ques"] = $questions->getIndexQuestion();
+            }
+        }
+
+
+       
+         /**envois dans la bases de donner historique */
+         foreach ($score as $key => $value) {
             $id_question = $key;
         }
         $cat_temp = $questionRepository->findOneBy([
@@ -316,43 +352,11 @@ class QuizzController extends AbstractController
             }
 
         /**fin de l'envois */
-        $donnees_final = [];
-        $comp = 0;
-        foreach ($score as $name_rep) {
-            $comp++;
-            $donnees_final[$comp]["repUser"] = $name_rep;
-        }
-        $tab1 = 0;
-        foreach ($verifQuestion as $key => $value) {
-            $tab1++;
-            $donnees_final[$tab1]["result_repUser"] = $value;
-
-
-            $question = $questionRepository->findBy(
-                [
-                    "id" => $key
-                ]
-            );
-            $donnees_reponse = $reponseRepository->findBy(([
-                "indice_reponse" => 1,
-                "question" => $key
-            ]));
-            foreach ($donnees_reponse as $reps) {
-
-                $donnees_final[$tab1]["corect"] = $reps->getReponse();
-            }
-
-            foreach ($question as $questions) {
-
-                $donnees_final[$tab1]["question"] = $questions->getQuestion();
-                $donnees_final[$tab1]["index_ques"] = $questions->getIndexQuestion();
-            }
-        }
-
-      
-        $session->set('score_final', $donnees_final);
         $score = $session->get('score_final');
        // $session->set('score', []);
+       $json = json_encode($score, JSON_FORCE_OBJECT);
+       
+       $session->set('score_final', $donnees_final);
         return $this->render('quizz/resultat.html.twig', [
             "result" => $score,
             "score" => $score_pourcentage,
