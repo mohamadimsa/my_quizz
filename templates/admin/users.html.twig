@@ -4,6 +4,9 @@
 
 {% block body %}
     <h1>Liste des utilisateurs</h1>
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('register_user') }}">REGISTER USER</a>
+{% endif %}
     <table>
         <thead>
             <th>ID</th>

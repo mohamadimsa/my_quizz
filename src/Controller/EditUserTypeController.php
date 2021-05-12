@@ -8,12 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Security\UserChecker;
 use App\Form\EditUserType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class EditUserTypeController extends AbstractController
 {
     /**
  * @Route("/utilisateurs/modifier/{id}", name="modifier_utilisateur")
  */
-public function editUser(User $user, Request $request)
+public function editUser(User $user, Request $request,UserPasswordEncoderInterface $passwordEncoder)
 {
     $form = $this->createForm(EditUserType::class, $user);
     $form->handleRequest($request);
@@ -22,6 +23,16 @@ public function editUser(User $user, Request $request)
         $user->setUpdateAt(
              $form->setUpdateAt= new \DateTime(null, new \DateTimeZone('Europe/Paris')),
         );
+        $user->setPassword(
+            $passwordEncoder->encodePassword(
+                $user,
+                $form->get('password')->getData()
+            )
+        );
+        $user->setPseudo(  
+                $form->get('firstname')->getData()
+        );
+        
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
