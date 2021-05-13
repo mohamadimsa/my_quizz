@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\Categories;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Form\RegistrationFormType;
@@ -63,9 +63,10 @@ class RegistrationController extends AbstractController
         $mailer->send($message);
             return $this->redirectToRoute('app_login');
         }
-
+        $categories_name = $this->getDoctrine()->getRepository(Categories::class)->findAll();
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            "categories" => $categories_name
         ]);
     }
 

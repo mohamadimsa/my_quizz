@@ -3,28 +3,16 @@
 {% block title %}My_quizz
 {% endblock %}
 
-{% block body %}
+{% block central %}
 
-	<div class="container-fluid">
-			<div class="row">
-            <div class="col-3"></div>
-
-			<div class="col">
-             {% if error is defined %}
-
-            <p>{{error}}</p>
-              {% endif %}
-			{% if listQuizzs is defined %}
-                   <h4>Resulat trouver ({{listQuizzs|length}})</h4>
-
-                {% for listQuizz in listQuizzs %}
-
-                <a href="/quizz/{{listQuizz.id}}">{{listQuizz.name}}</a>
-                    
-                {% endfor %}
-            {% endif %}
+    {% if error is defined %}
+        <p>{{error}}</p>
+    {% endif %}
+	{% if listQuizzs is defined %}
+        <h4>Resulat trouver ({{listQuizzs|length}})</h4>
+           {% for listQuizz in listQuizzs %}
+            <a href="/quizz/{{listQuizz.id}}">{{listQuizz.name}}</a>
+           {% endfor %}
+    {% endif %}
 		
-			</div>
-		</div>
-	</div>
 {% endblock %}

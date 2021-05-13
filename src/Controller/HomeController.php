@@ -37,6 +37,7 @@ class HomeController extends AbstractController
      */
     public function show_categories($name, CategoriesRepository $categoriesRepository, QuizzRepository $quizzRepository)
     {
+        $categories_name = $this->getDoctrine()->getRepository(Categories::class)->findAll();
 
         $categories = $categoriesRepository->findBy([
             "name" => $name
@@ -46,9 +47,11 @@ class HomeController extends AbstractController
             $error = "cette categorie n'existe pas";
 
             return $this->render("home/listQuizz.html.twig", [
-                "error" => $error
+                "error" => $error,
+                "categories" => $categories_name
             ]);
         }
+      
 
         $id_categories = $categories[0]->getId();
 
@@ -60,13 +63,15 @@ class HomeController extends AbstractController
             $error = "aucun quizz n'a etait trouver";
 
             return $this->render("home/listQuizz.html.twig", [
-                "error" => $error
+                "error" => $error,
+                "categories" => $categories_name
             ]);
         }
 
         return $this->render("home/listQuizz.html.twig",[
 
-           "listQuizzs" => $quizz
+           "listQuizzs" => $quizz,
+           "categories" => $categories_name
         ]);
     }
 }

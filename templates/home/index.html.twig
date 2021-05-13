@@ -3,19 +3,7 @@
 {% block title %}My_quizz
 {% endblock %}
 
-{% block body %}
+{% block central %}
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-3">
-				<div class="row">
-					<h2>Categorie</h2>
-					{% for categorie in categories %}
-						<a href="/categorie/{{categorie.name}}">{{categorie.name}}</a>
-					{% endfor %}
-				</div>
-
-			</div>
-		</div>
-	</div>
+	
 {% endblock %}
