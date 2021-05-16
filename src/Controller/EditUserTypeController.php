@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class EditUserTypeController extends AbstractController
 {
     /**
- * @Route("/utilisateurs/modifier/{id}", name="modifier_utilisateur")
+ * @Route("admin/utilisateurs/modifier/{id}", name="modifier_utilisateur")
  */
 public function editUser(User $user, Request $request,UserPasswordEncoderInterface $passwordEncoder)
 {
@@ -23,15 +23,7 @@ public function editUser(User $user, Request $request,UserPasswordEncoderInterfa
         $user->setUpdateAt(
              $form->setUpdateAt= new \DateTime(null, new \DateTimeZone('Europe/Paris')),
         );
-        $userss = $this->getDoctrine()->getRepository(User::class)->findOneBy(['password' => $form->get('password')->getData()]);
-        if(!$userss){
-              $user->setPassword(
-                $passwordEncoder->encodePassword(
-                            $user,
-                            $form->get('password')->getData()
-                        )
-                        );
-        }
+        
         $user->setPseudo(  
                 $form->get('firstname')->getData()
         );
@@ -49,7 +41,7 @@ public function editUser(User $user, Request $request,UserPasswordEncoderInterfa
     ]);
 }
    /**
- * @Route("/utilisateurs/delete/{id}", name="supprimer_utilisateur")
+ * @Route("admin/utilisateurs/delete/{id}", name="supprimer_utilisateur")
  */
 public function deleteUser(User $user, Request $request){
     $users = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $user]);
@@ -60,7 +52,7 @@ public function deleteUser(User $user, Request $request){
         return $this->redirectToRoute('utilisateurs');
 }
  /**
- * @Route("/utilisateurs/desactiver/{id}", name="desactiver_utilisateur")
+ * @Route("admin/utilisateurs/desactiver/{id}", name="desactiver_utilisateur")
  */
 public function desactiver(User $user, Request $request){
     $users = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $user]);
@@ -72,7 +64,7 @@ public function desactiver(User $user, Request $request){
 }
 
 /**
- * @Route("/utilisateurs/activer/{id}", name="activer_utilisateur")
+ * @Route("admin/utilisateurs/activer/{id}", name="activer_utilisateur")
  */
 public function activer(User $user, Request $request){
     $users = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $user]);

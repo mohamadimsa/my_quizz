@@ -1,29 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'user.html.twig' %}
 
 {% block title %}Liste des utilisateurs{% endblock %}
 
-{% block body %}
+{% block central %}
     <h1>Liste des utilisateurs</h1>
-{% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('register_user') }}">REGISTER USER</a>
-{% endif %}
-    <table>
+
+    <table class="table table-striped">
         <thead>
-            <th>ID</th>
-            <th>Email</th>
-            <th>Rôles</th>
-            <th>Modifier</th>
-            <th>Supprimer</th>
-            <th>Options</th>
+            <th  scope="col">ID</th>
+            <th  scope="col">Email</th>
+            <th  scope="col">Rôles</th>
+            <th  scope="col">Modifier</th>
+            <th  scope="col">Supprimer</th>
+            <th  scope="col">Options</th>
         </thead>
         <tbody>
             {# On boucle sur les utilisateurs #}
  
             {% for user in users %}
 
-                <tr>
+                <tr scope="row">
                 {% if app.user.email == user.email%}
-                <p>Vous etes connecté avec l'admin {{ user.email }}</p>
                 {% else %}
                     <td>{{ user.id }}</td>
                     <td>{{ user.email }}</td>
@@ -32,8 +29,6 @@
                         {% for role in user.roles %}
                             {% if role == "ROLE_USER" %}
                                 Utilisateur
-                            {% elseif role == "ROLE_EDITOR" %}
-                                Editeur
                             {% elseif role == "ROLE_ADMIN" %}
                                 Administrateur
                             {% endif %}

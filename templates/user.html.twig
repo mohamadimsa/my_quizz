@@ -27,12 +27,20 @@
 
 	    <div class="row">
         <div class="col-2 menu-categorie position-sticky">
-            <h2>Compte</h2>
+            <h2>Compte
+			{% if is_granted('ROLE_ADMIN') %}
+                  Admin
+              {% endif %}
+			</h2>
 			<nav class="nav flex-column">
 
 				<a  class="nav-link" href="/user/profil">Mon Profile</a>
 				<a  class="nav-link" href="/create/quizz">Cree un quizz</a>
 				<a  class="nav-link" href="/user/pseudo/historique">Accéder à mon historique</a>
+				{% if is_granted('ROLE_ADMIN') %}
+				<a  class="nav-link" href="{{ path('utilisateurs')}}">Liste utilisateur</a>
+				<a  class="nav-link" href="{{ path('register_user') }}">Enregistrer un utilisateur</a>
+				{% endif%}
 				
 			</nav>
 			   		

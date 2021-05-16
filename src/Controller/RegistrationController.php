@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Form\RegistrationFormType;
 use App\Form\ResetPasswordType;
+use App\Repository\CategoriesRepository;
 use App\Security\EmailVerifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -169,9 +170,9 @@ class RegistrationController extends AbstractController
         // On redirige vers la page de login
         return $this->redirectToRoute('app_login');
     }
-
+    $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
     // On envoie le formulaire à la vue
-    return $this->render('reset_password/base.html.twig',['emailForm' => $form->createView()]);
+    return $this->render('reset_password/base.html.twig',['emailForm' => $form->createView(),"categories" => $categories]);
 }
 /**
  * @Route("/reset_pass/{token}", name="app_reset_password")
