@@ -25,6 +25,10 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler,\Swift_Mailer $mailer): Response
     {
+
+        if ($this->getUser()) {
+            return $this->redirectToRoute('show_profil');
+         }
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -204,8 +208,12 @@ public function resetPassword(Request $request, string $token, UserPasswordEncod
         // On redirige vers la page de connexion
         return $this->redirectToRoute('app_login');
     }else {
+        $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
         // Si on n'a pas reçu les données, on affiche le formulaire
-        return $this->render('reset_password/reset_pass.html.twig', ['token' => $token]);
+        return $this->render('reset_password/reset_pass.html.twig', [
+            'token' => $token,
+            "categories" => $categories
+        ]);
     }
 
 }

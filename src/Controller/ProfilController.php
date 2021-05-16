@@ -17,11 +17,23 @@ class ProfilController extends AbstractController
     public function index(): Response
     {
         return $this->render('profil/index.html.twig', [
-            'controller_name' => 'ProfilController',
+           
         ]);
     }
 
-    /**
+/**
+ * @Route("user/profil", name="show_profil")
+ */
+
+ public function show_profil() : Response
+ {
+     
+     return $this->render('profil/index.html.twig');
+ }
+
+
+
+ /**
  * @Route("/profil/edit/{id}", name="modifier_profil")
  */
 public function editUser(User $user,UserRepository $utilisateur, Request $request,UserPasswordEncoderInterface $passwordEncoder,\Swift_Mailer $mailer)

@@ -19,7 +19,7 @@
 		  <div class="row menu" >
 		<nav class="navbar navbar-expand-lg  col ">
 			<a class="navbar-brand col-9 logo" href="{{ path('home')}}">&nbsp;&nbsp;My_quizz</a>
-			<a class="link btn btn-outline-success" href="{{path("app_register") }}">Mon compte</a>
+			<a class="link btn btn-outline-success" href="{{path("show_profil") }}">Mon compte</a>
 			<a class="link" href="{{ path('app_logout') }}">deconnection</a>
 		</nav>
 	</div>
@@ -29,12 +29,11 @@
         <div class="col-2 menu-categorie position-sticky">
             <h2>Compte</h2>
 			<nav class="nav flex-column">
-			 
-				<a  class="nav-link" href="">Mon Profile</a>
+
+				<a  class="nav-link" href="/user/profil">Mon Profile</a>
 				<a  class="nav-link" href="/create/quizz">Cree un quizz</a>
 				<a  class="nav-link" href="/user/pseudo/historique">Accéder à mon historique</a>
 				
-
 			</nav>
 			   		
 		</div>
@@ -42,7 +41,6 @@
 		<div class="col contenue-central">  
 			{% block central %}{% endblock %}
 		</div>
-
         </div>
 
 </body>

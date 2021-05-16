@@ -15,7 +15,7 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('show_profil');
          }
          $categories_name = $this->getDoctrine()->getRepository(Categories::class)->findAll();
 
