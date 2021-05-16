@@ -29,7 +29,7 @@ class EditProfil extends AbstractType
                 'required' => true,
                 'attr' => ['class' =>'form-control'],
             ])
-            ->add('password')
+            ->add('password',PasswordType::class)
             ->add('valider', SubmitType::class)
         ;
     }

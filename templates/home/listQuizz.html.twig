@@ -5,27 +5,47 @@
 
 {% block central %}
 
-	<div class="container-fluid">
-			<div class="row">
-            <div class="col-3"></div>
+  <div class="row">
+    <div class="col-3"></div>
 
-			<div class="col">
-             {% if error is defined %}
+    <div class="col">
+      {% if error is defined %}
 
-            <p>{{error}}</p>
+        <p>{{error}}</p>
+      {% endif %}
+      {% if listQuizzs is defined %}
+
+        <h4>Resulat trouver ({{listQuizzs|length}})</h4>
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Categorie</th>
+              <th scope="col">nom Quizz</th>
+              {% if is_granted('ROLE_ADMIN') %}
+                <th scope="col">Supprimer</th>
               {% endif %}
-			{% if listQuizzs is defined %}
-                   <h4>Resulat trouver ({{listQuizzs|length}})</h4>
+            </tr>
+          </thead>
+          <tbody>
 
-                {% for listQuizz in listQuizzs %}
-
-                <a href="/quizz/{{listQuizz.id}}">{{listQuizz.name}}</a>
+            {% for listQuizz in listQuizzs %}
+              <tr>
+                <th scope="row">{{name}}</th>
+                <td>
+                  <a href="/quizz/{{listQuizz.id}}">{{listQuizz.name}}</a>
+                </td>
                 {% if is_granted('ROLE_ADMIN') %}
-                
-                        <a href="{{ path('quizz_delete', {'id': listQuizz.id}) }}">Supprimer ce quizz</a>
-                 {% endif %}
-                 
-                {% endfor %}
-            {% endif %}
-		
-{% endblock %}
+                  <td>
+                    <a href="{{ path('quizz_delete', {'id': listQuizz.id}) }}">Supprimer ce quizz</a>
+                  </td>
+                {% endif %}
+
+              </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+
+    {% endblock %}
