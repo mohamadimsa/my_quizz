@@ -59,4 +59,30 @@ public function deleteUser(User $user, Request $request){
     $this->addFlash('succes', 'Utilisateur effacé avec succés');
         return $this->redirectToRoute('utilisateurs');
 }
+ /**
+ * @Route("/utilisateurs/desactiver/{id}", name="desactiver_utilisateur")
+ */
+public function desactiver(User $user, Request $request){
+    $users = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $user]);
+    $user->setActivationToken(md5(uniqid()));
+    $entityManager = $this->getDoctrine()->getManager();
+    $entityManager->flush($users);
+    $this->addFlash('succes', 'Vous avez desactivé le compte avec succés');
+        return $this->redirectToRoute('utilisateurs');
+}
+
+/**
+ * @Route("/utilisateurs/activer/{id}", name="activer_utilisateur")
+ */
+public function activer(User $user, Request $request){
+    $users = $this->getDoctrine()->getRepository(User::class)->findOneBy(['id' => $user]);
+   
+    $entityManager = $this->getDoctrine()->getManager();
+    $users->setActivationToken(null);
+    $entityManager = $this->getDoctrine()->getManager();
+    $entityManager->persist($users);
+    $entityManager->flush();
+    $this->addFlash('succes', 'Vous avez activé ce compte avec succés');
+        return $this->redirectToRoute('utilisateurs');
+}
 }
