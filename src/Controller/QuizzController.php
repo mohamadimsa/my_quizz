@@ -219,7 +219,7 @@ class QuizzController extends AbstractController
 
             ->add($name_btn, SubmitType::class, [
                 "attr"=> [
-                    "class"=> "bouton_question_suivante"
+                    "class"=> "bouton_question_suivante btn btn-outline-danger"
                 ]
             ]) 
             ->getForm();

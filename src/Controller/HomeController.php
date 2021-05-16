@@ -71,7 +71,8 @@ class HomeController extends AbstractController
         return $this->render("home/listQuizz.html.twig",[
 
            "listQuizzs" => $quizz,
-           "categories" => $categories_name
+           "categories" => $categories_name,
+           "name"=> $name
         ]);
     }
 }

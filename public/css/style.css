@@ -54,15 +54,18 @@ box-shadow: 0px -1px 6px 6px rgba(196, 200, 73, 0.8);
 /*page quizz*/
 .reponse{
     font-size: 14px;
+    
 
 }
 .nom_question{
     color:red;
-    margin: auto;
-    width: 300px;
+    
 }
 .reponse label{
-    font-size: 14px;
+    font-size: 1.4em;
 }
-
-.reponse{} 
+.bouton_question_suivante{
+    margin-left: 34%;
+    margin-top: 5em;
+    font-size: 1.4em;
+}
