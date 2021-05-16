@@ -20,7 +20,7 @@
                 {% for listQuizz in listQuizzs %}
 
                 <a href="/quizz/{{listQuizz.id}}">{{listQuizz.name}}</a>
-                    
+                <a href="{{ path('quizz_delete', {'id': listQuizz.id}) }}">Supprimer ce quizz</a> 
                 {% endfor %}
             {% endif %}
 		

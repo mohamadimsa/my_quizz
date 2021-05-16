@@ -31,7 +31,10 @@ class Reponsehistorique
    
 
     
-  
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getHistorique(): ?historique
     {

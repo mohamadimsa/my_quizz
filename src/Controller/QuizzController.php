@@ -223,6 +223,60 @@ class QuizzController extends AbstractController
             "monformulaire" => $view
         ]);
     }
+    /**
+     * @Route("/quizz/delete/{id}", name="quizz_delete" )
+     */
+    public function deleteUser(Request $request, QuestionRepository $questionRepository, ReponseRepository $reponse, $id, QuizzRepository $quizzRepository){
+
+        $quizz =  $this->getDoctrine()->getRepository(Quizz::class)->findAll([
+            "id" => $id
+        ]);
+        foreach ($quizz as $value) {
+            $historique=  $this->getDoctrine()->getRepository(Historique::class)->findAll([
+                "quizz" => $value->getId()
+            ]);
+        }
+        foreach ($historique as $key) {
+            $reponsehisto=$this->getDoctrine()->getRepository(Reponsehistorique::class)->findAll([
+            
+                "historique"=>$key->getId()
+            ]);
+       }
+        
+       foreach ($quizz as $key) {
+        $question=$this->getDoctrine()->getRepository(Question::class)->findAll([
+            
+            "quizz" => $key->getId()
+        ]);
+       }
+       foreach ($question as $key) {
+        $response=$this->getDoctrine()->getRepository(Reponse::class)->findAll([
+            "question" => $key->getId()
+        ]);
+       }
+      
+        $entityManager = $this->getDoctrine()->getManager();
+        foreach ($reponsehisto as $value) {
+            $entityManager->remove($value);
+        }
+        foreach ($historique as $value) {
+            $entityManager->remove($value);
+        }
+        foreach ($response as $value) {
+            $entityManager->remove($value);
+        }
+        foreach ($question as $value) {
+            $entityManager->remove($value);
+        }
+        foreach ($quizz as $value) {
+            $entityManager->remove($value);
+        }
+        $entityManager->flush();
+       
+        $this->addFlash('success', 'Quizz effacé avec succés');
+            return $this->redirectToRoute('home');
+
+    }
 
     /**
      * @Route("/score", name="quizz_score")
