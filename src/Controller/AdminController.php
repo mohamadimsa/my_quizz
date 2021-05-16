@@ -24,10 +24,17 @@ class AdminController extends AbstractController
     * @Route("/utilisateurs", name="utilisateurs")
     */
     public function usersList(UserRepository $user)
-{
-    return $this->render('admin/users.html.twig', [
-        'users' => $user->findAll(),
-    ]);
+{  $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    $users = $this->getUser();
+    if(!$users){
+        return $this->redirectToRoute('app_logout');
+    }
+    else{
+        return $this->render('admin/users.html.twig', [
+            'users' => $user->findAll(),
+        ]);
+    }
+   
 }
 
 
