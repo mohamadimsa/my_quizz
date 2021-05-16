@@ -14,7 +14,7 @@
                {% if questions is defined and  questions|length > 0   %}
 					<ul>
 						{% for question in questions %}
-							<h2>{{question.question}}</h2>
+							<h2 class="nom_question">{{question.question}}</h2>
 						{% endfor %}
 					</ul>
 				{% endif %}
@@ -22,9 +22,9 @@
 
 
 	        <div class="row reponse">
-				<ul>
+				
 			  {{form(monformulaire)}}
-				</ul>
+				
 			</div>
 
 		</div>

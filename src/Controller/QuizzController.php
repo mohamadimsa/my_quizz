@@ -132,9 +132,12 @@ class QuizzController extends AbstractController
         $form->add("Cree_le_Quizz", SubmitType::class);
 
         $view =  $form->getForm()->createView();
+        $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
 
         return $this->render('quizz/create.html.twig', [
-            "monform" => $view
+            "monform" => $view, 
+            "categories" => $categories
+
         ]);
     }
 
@@ -208,19 +211,30 @@ class QuizzController extends AbstractController
             ->add("reponse", ChoiceType::class, [
                 'choices' => $option,
                 'expanded' => true,
-                'label' => "Selectionne la bonne reponse :"
+                'label' => "Selectionne la bonne reponse :", 
+                "attr"=> [
+                    "class"=> "reponse d-flex flex-column"
+                ]
             ])
 
-            ->add($name_btn, SubmitType::class)
+            ->add($name_btn, SubmitType::class, [
+                "attr"=> [
+                    "class"=> "bouton_question_suivante"
+                ]
+            ]) 
             ->getForm();
 
         $view = $form->createView();
         $score = $session->get('score_final', []);
         $session->set("score_final", []);
+        $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
+
         return $this->render('quizz/quizz.html.twig', [
             'questions' => $questions,
             "reponses" => $donnees_reponse,
-            "monformulaire" => $view
+            "monformulaire" => $view,
+            "categories" => $categories
+
         ]);
     }
 
@@ -290,7 +304,7 @@ class QuizzController extends AbstractController
 
 
        
-         /**envois dans la bases de donner historique */
+         /**envoie dans la bases de donner historique */
          foreach ($score as $key => $value) {
             $id_question = $key;
         }

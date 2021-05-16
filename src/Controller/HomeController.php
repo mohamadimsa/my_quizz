@@ -44,7 +44,7 @@ class HomeController extends AbstractController
         ]);
 
         if (count($categories) == 0) {
-            $error = "cette categorie n'existe pas";
+            $error = "Cette categorie n'existe pas";
 
             return $this->render("home/listQuizz.html.twig", [
                 "error" => $error,
@@ -60,7 +60,7 @@ class HomeController extends AbstractController
         ]);
 
         if (count($quizz) == 0) {
-            $error = "aucun quizz n'a etait trouver";
+            $error = "Aucun quizz n'a été trouvé";
 
             return $this->render("home/listQuizz.html.twig", [
                 "error" => $error,
