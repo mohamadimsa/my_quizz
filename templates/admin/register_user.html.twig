@@ -1,0 +1,24 @@
+{% extends 'user.html.twig' %}
+
+{% block title %}Register User{% endblock %}
+
+{% block central %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+    <h1>Register</h1>
+
+    {{ form_start(registerUserType) }}
+        {{ form_row(registerUserType.firstname) }}
+        {{ form_row(registerUserType.lastname) }}
+        {{ form_row(registerUserType.email) }}
+        {# .first and .second may vary in your use - see the note below #}
+        {{ form_row(registerUserType.password.first) }}
+        {{ form_row(registerUserType.password.second) }}
+        {{ form_row(registerUserType.agreeTerms) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registerUserType) }}
+
+{% endblock %}

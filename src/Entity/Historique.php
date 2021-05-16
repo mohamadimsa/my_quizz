@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\HistoriqueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -44,6 +45,7 @@ class Historique
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime
      */
     private $date;
 

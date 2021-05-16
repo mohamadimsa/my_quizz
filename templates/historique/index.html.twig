@@ -1,0 +1,35 @@
+{% extends 'user.html.twig' %}
+
+{% block title %}historique{% endblock %}
+
+{% block central %}
+   <div class="historique">
+
+   <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Quizz</th>
+      <th scope="col">Categorie</th>
+      <th scope="col">Date</th>
+      <th scope="col">Score</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for historique in historiques %}
+      <tr>
+      <th scope="row">{{historique.quizz.name}}</th>
+      <td>{{historique.categories.name}}</td>
+      <td>{{historique.date |format_datetime()}}</td>
+      <td>{{historique.score}}%</td>
+      <td><a href="/user/{{historique.users.pseudo}}/correction/{{historique.id}}">correction</a></td>
+    </tr>
+  {% endfor %}
+    
+  </tbody>
+</table>
+
+   </div>
+
+{% endblock %}
+

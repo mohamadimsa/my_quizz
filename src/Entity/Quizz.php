@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\CategoriesRepository;
 use App\Repository\QuizzRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -50,6 +51,9 @@ class Quizz
         return $this->id;
     }
 
+ 
+
+
     public function getName(): ?string
     {
         return $this->name;
@@ -61,15 +65,26 @@ class Quizz
 
         return $this;
     }
-
-    public function getCategories(): ?categories
+    
+    
+    public function getCategories(): ?Categories
     {
         return $this->categories;
     }
 
-    public function setCategories(?categories $categories): self
+    public function addCategories(int $id , CategoriesRepository $categoriesRepository){
+
+        $categorieId = $categoriesRepository->findBy([
+            "id" => $id
+        ]);
+        return $this->categories = $categorieId[0]->getId();
+ }
+
+    public function setCategories(?Categories $categories): self
     {
         $this->categories = $categories;
+
+    
 
         return $this;
     }
@@ -82,15 +97,7 @@ class Quizz
         return $this->questions;
     }
 
-    public function addQuestion(Question $question): self
-    {
-        if (!$this->questions->contains($question)) {
-            $this->questions[] = $question;
-            $question->setQuizz($this);
-        }
 
-        return $this;
-    }
 
     public function removeQuestion(Question $question): self
     {

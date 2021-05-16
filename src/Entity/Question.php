@@ -40,6 +40,11 @@ class Question
      */
     private $reponsehistoriques;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $index_question;
+
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
@@ -131,6 +136,18 @@ class Question
                 $reponsehistorique->setQuestion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIndexQuestion(): ?int
+    {
+        return $this->index_question;
+    }
+
+    public function setIndexQuestion(int $index_question): self
+    {
+        $this->index_question = $index_question;
 
         return $this;
     }

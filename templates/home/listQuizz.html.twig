@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My_quizz
+{% endblock %}
+
+{% block central %}
+
+    {% if error is defined %}
+        <p>{{error}}</p>
+    {% endif %}
+	{% if listQuizzs is defined %}
+        <h4>Resulat trouver ({{listQuizzs|length}})</h4>
+           {% for listQuizz in listQuizzs %}
+            <a href="/quizz/{{listQuizz.id}}">{{listQuizz.name}}</a>
+           {% endfor %}
+    {% endif %}
+		
+{% endblock %}

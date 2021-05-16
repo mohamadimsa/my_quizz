@@ -1,0 +1,25 @@
+{% extends 'user.html.twig' %}
+
+{% block title %}Hello ProfilController!{% endblock %}
+
+{% block central %}
+
+
+    <div class="row">
+    <div class="col-2 img-profil">
+      <img src="{{asset("profil/default-avatar.png")}}" alt="image de profil">
+    </div>
+
+    <div class="col info-user">
+     <p>Nom : {{app.user.lastName}}</p>
+     <p>Prenom :{{app.user.firstName}} </p>
+     <p>email : {{app.user.email}}</p>
+     <p>pseudo : {{app.user.pseudo}}</p>
+     <p>Date creation : {{app.user.createAt |format_datetime()}}</p>
+    </div>
+
+    <div class="col">
+       <a href="/profil/edit/{{app.user.id}}">mettre à jour mon profil<a>
+    </div>
+   
+{% endblock %}

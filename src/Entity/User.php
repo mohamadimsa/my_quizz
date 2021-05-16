@@ -78,10 +78,17 @@ class User implements UserInterface
      */
     private $historiques;
 
+
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $isVerified = false;
+    private $activation_token;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $reset_token;
+    
 
     public function __construct()
     {
@@ -277,14 +284,28 @@ class User implements UserInterface
         return $this;
     }
 
-    public function isVerified(): bool
+
+
+    public function getActivationToken(): ?string
     {
-        return $this->isVerified;
+        return $this->activation_token;
     }
 
-    public function setIsVerified(bool $isVerified): self
+    public function setActivationToken(?string $activation_token): self
     {
-        $this->isVerified = $isVerified;
+        $this->activation_token = $activation_token;
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->reset_token;
+    }
+
+    public function setResetToken(?string $reset_token): self
+    {
+        $this->reset_token = $reset_token;
 
         return $this;
     }
