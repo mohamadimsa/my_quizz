@@ -1,16 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'user.html.twig' %}
 
-{% block title %}Hello QuizzController!{% endblock %}
+{% block title %}crée quizz{% endblock %}
 
-{% block body %}
+{% block central %}
 
-<div class="container-fluid">
+
 		<div class="row">
-            <div class="col-3"></div>
-
-			<div class="col">
 	        {{form(monform)}}
 			</div>
 		</div>
-	</div>
+
 {% endblock %}

@@ -77,14 +77,6 @@ class HistoriqueController extends AbstractController
             "historique" => $id
         ]);
 
-       
-       
-
-        
-
-       
-
-
 
         return $this->render('quizz/resultat.html.twig', [
             'result' => $historique->getReponse(),
