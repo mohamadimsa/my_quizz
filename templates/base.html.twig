@@ -30,6 +30,7 @@
 					<a class="navbar-brand" href="{{ path('home')}}">My_quizz</a>
 					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 						<a class="link" href="{{ path('app_logout') }}">deconnexion</a>
+						<a class="link" href="{{ path('modifier_profil', {'id':app.user.id}) }}">  Mon profil</a>
 					{% else %}
 						<ul>
 							<li><a href="{{path("app_login") }}">se connecter</a></li>

@@ -23,12 +23,15 @@ public function editUser(User $user, Request $request,UserPasswordEncoderInterfa
         $user->setUpdateAt(
              $form->setUpdateAt= new \DateTime(null, new \DateTimeZone('Europe/Paris')),
         );
-        $user->setPassword(
-            $passwordEncoder->encodePassword(
-                $user,
-                $form->get('password')->getData()
-            )
-        );
+        $userss = $this->getDoctrine()->getRepository(User::class)->findOneBy(['password' => $form->get('password')->getData()]);
+        if(!$userss){
+              $user->setPassword(
+                $passwordEncoder->encodePassword(
+                            $user,
+                            $form->get('password')->getData()
+                        )
+                        );
+        }
         $user->setPseudo(  
                 $form->get('firstname')->getData()
         );

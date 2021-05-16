@@ -38,12 +38,18 @@ public function editUser(User $user,UserRepository $utilisateur, Request $reques
         $user->setUpdateAt(
              $form->setUpdateAt= new \DateTime(null, new \DateTimeZone('Europe/Paris')),
         );
-        $user->setPassword(
-            $passwordEncoder->encodePassword(
-                $user,
-                $form->get('password')->getData()
-            )
-        );
+        $userss = $this->getDoctrine()->getRepository(User::class)->findOneBy(['password' => $form->get('password')->getData()]);
+        if(!$userss){
+              $user->setPassword(
+                $passwordEncoder->encodePassword(
+                            $user,
+                            $form->get('password')->getData()
+                        )
+                        );
+        }
+        
+        
+    
         $user->setPseudo(  
                 $form->get('firstname')->getData()
         );
@@ -68,6 +74,8 @@ public function editUser(User $user,UserRepository $utilisateur, Request $reques
             );
         
             $mailer->send($message);
+            $this->addFlash('success', "Votre compte a été désactiver,veuillez l'activer en cliquant sur le lien envoyé par mail");
+            return $this->redirectToRoute('app_logout');
         }
         
         $entityManager = $this->getDoctrine()->getManager();
