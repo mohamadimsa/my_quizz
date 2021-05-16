@@ -339,12 +339,11 @@ class QuizzController extends AbstractController
 
         /**fin de l'envois */
 
-
+        $session->set('score_final', $donnees_final);
 
         $score = $session->get('score_final');
-       // $session->set('score', []);
+        $session->set('score', []);
        
-       $session->set('score_final', $donnees_final);
         return $this->render('quizz/resultat.html.twig', [
             "result" => $score,
             "score" => $score_pourcentage,
