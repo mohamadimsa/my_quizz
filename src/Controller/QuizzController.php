@@ -411,10 +411,11 @@ class QuizzController extends AbstractController
 
         $score = $session->get('score_final');
         $session->set('score', []);
-       
+        $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
         return $this->render('quizz/resultat.html.twig', [
             "result" => $score,
             "score" => $score_pourcentage,
+            'categories' => $categories
         ]);
     }
 }

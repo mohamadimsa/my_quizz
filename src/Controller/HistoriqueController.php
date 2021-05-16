@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Categories;
 use App\Repository\HistoriqueRepository;
 use App\Repository\ReponsehistoriqueRepository;
 use PhpParser\Node\Stmt\ElseIf_;
@@ -76,11 +77,12 @@ class HistoriqueController extends AbstractController
         $historique = $reponsehistoriqueRepository->findOneby([
             "historique" => $id
         ]);
-
+        $categories = $this->getDoctrine()->getRepository(Categories::class)->findAll();
 
         return $this->render('quizz/resultat.html.twig', [
             'result' => $historique->getReponse(),
-            'score' =>  $verif_his->getScore() 
+            'score' =>  $verif_his->getScore(),
+            'categories' => $categories
             ]);
     }
 }
