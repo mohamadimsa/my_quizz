@@ -5,9 +5,82 @@
 {% block central %}
 
 
-		<div class="row">
-	        {{form(monform)}}
-			</div>
-		</div>
+	     
+	
+{{ form_start(monform) }}
 
+     <div class="form-group">{{ form_row(monform.name_quizz,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.categorie,{'attr':{'class':'form-select'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.question_1,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_1_1,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_2_1,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_3_1,{'attr':{'class':'form-control'}}) }}</div>
+	  <div class="form-group">{{ form_row(monform.rep_4_1,{'attr':{'class':'form-control'}}) }}</div>
+	   <div class="form-group">{{ form_row(monform.corect_reponse1,{'attr':{'class':'form-select'}}) }}</div>
+
+	<div class="form-group">{{ form_row(monform.question_2,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_1_2,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_2_2,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_3_2,{'attr':{'class':'form-control'}}) }}</div>
+	  <div class="form-group">{{ form_row(monform.rep_4_2,{'attr':{'class':'form-control'}}) }}</div>
+	   <div class="form-group">{{ form_row(monform.corect_reponse2,{'attr':{'class':'form-select'}}) }}</div>
+
+	   <div class="form-group">{{ form_row(monform.question_3,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_1_3,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_2_3,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_3_3,{'attr':{'class':'form-control'}}) }}</div>
+	  <div class="form-group">{{ form_row(monform.rep_4_3,{'attr':{'class':'form-control'}}) }}</div>
+	   <div class="form-group">{{ form_row(monform.corect_reponse3,{'attr':{'class':'form-select'}}) }}</div>
+
+	   	   <div class="form-group">{{ form_row(monform.question_4,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_1_4,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_2_4,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_3_4,{'attr':{'class':'form-control'}}) }}</div>
+	  <div class="form-group">{{ form_row(monform.rep_4_4,{'attr':{'class':'form-control'}}) }}</div>
+	   <div class="form-group">{{ form_row(monform.corect_reponse4,{'attr':{'class':'form-select'}}) }}</div>
+
+	   	   <div class="form-group">{{ form_row(monform.question_5,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_1_5,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_2_5,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_3_5,{'attr':{'class':'form-control'}}) }}</div>
+	  <div class="form-group">{{ form_row(monform.rep_4_5,{'attr':{'class':'form-control'}}) }}</div>
+	   <div class="form-group">{{ form_row(monform.corect_reponse5,{'attr':{'class':'form-select'}}) }}</div>
+
+	   <div class="form-group">{{ form_row(monform.question_6,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_1_6,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_2_6,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_3_6,{'attr':{'class':'form-control'}}) }}</div>
+	  <div class="form-group">{{ form_row(monform.rep_4_6,{'attr':{'class':'form-control'}}) }}</div>
+	   <div class="form-group">{{ form_row(monform.corect_reponse6,{'attr':{'class':'form-select'}}) }}</div>
+
+	   <div class="form-group">{{ form_row(monform.question_7,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_1_7,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_2_7,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_3_7,{'attr':{'class':'form-control'}}) }}</div>
+	  <div class="form-group">{{ form_row(monform.rep_4_7,{'attr':{'class':'form-control'}}) }}</div>
+	   <div class="form-group">{{ form_row(monform.corect_reponse7,{'attr':{'class':'form-select'}}) }}</div>
+
+	   <div class="form-group">{{ form_row(monform.question_8,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_1_8,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_2_8,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_3_8,{'attr':{'class':'form-control'}}) }}</div>
+	  <div class="form-group">{{ form_row(monform.rep_4_8,{'attr':{'class':'form-control'}}) }}</div>
+	   <div class="form-group">{{ form_row(monform.corect_reponse8,{'attr':{'class':'form-select'}}) }}</div>
+
+	   <div class="form-group">{{ form_row(monform.question_9,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_1_9,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_2_9,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_3_9,{'attr':{'class':'form-control'}}) }}</div>
+	  <div class="form-group">{{ form_row(monform.rep_4_9,{'attr':{'class':'form-control'}}) }}</div>
+	   <div class="form-group">{{ form_row(monform.corect_reponse9,{'attr':{'class':'form-select'}}) }}</div>
+
+	   <div class="form-group">{{ form_row(monform.question_10,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_1_10,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_2_10,{'attr':{'class':'form-control'}}) }}</div>
+	 <div class="form-group">{{ form_row(monform.rep_3_10,{'attr':{'class':'form-control'}}) }}</div>
+	  <div class="form-group">{{ form_row(monform.rep_4_10,{'attr':{'class':'form-control'}}) }}</div>
+	   <div class="form-group">{{ form_row(monform.corect_reponse10,{'attr':{'class':'form-select'}}) }}</div>
+ <div>{{ form_row(monform.Cree_le_Quizz,{'attr':{'class':'btn btn-primary'}}) }}</div>
+
+{{ form_end(monform) }}
 {% endblock %}

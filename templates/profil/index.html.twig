@@ -18,8 +18,9 @@
      <p>Date creation : {{app.user.createAt |format_datetime()}}</p>
     </div>
 
-    <div class="col">
-       <a href="/profil/edit/{{app.user.id}}">mettre à jour mon profil<a>
+    <div class="bt_profil">
+  
+       <a class="btn btn-lg btn-primary" href="/profil/edit/{{app.user.id}}">mettre à jour mon profil<a>
     </div>
    
 {% endblock %}

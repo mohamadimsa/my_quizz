@@ -1,20 +1,27 @@
+
 .logo{
-    font-size: 2em;
-    color: red;
+    font-size: 80px;
+    color: rgb(170, 56, 223);
+    width:60%;
 }
 .link{
     text-decoration: none;
 }
+.header{
+    margin-left: 20%;
+    margin-right: 20%;
+}
 .navbar{
-    background-color: #cacf27;
-    box-shadow: 10px 5px 5px#c4c849;
-    height: 5em;
+    background-color: #27c4cf;
+    box-shadow: 10px 5px 5px#27c4cf;
+    height: 10em;
 }
 .navbar-brand{
     padding-left: 7%;
 }
 .cn{
-    font-size: 1.3em;
+    margin-top: 3%;
+    font-size: 20px;
     color: white;
 }
 .btn-outline-success{
@@ -29,16 +36,16 @@
 }
 
 .menu-categorie {
+margin-top: 1%;
   background-color: rgba(37, 202, 51, 0.52);
   height: 100%;
+  width: 20%;
 }
 .menu-categorie a{
     color: rgba(75, 74, 74, 0.986);
 }
 .menu-categorie a:hover{
-    border-bottom: 2px dotted black;
     color: red;
-    font-size: 1.4em;
 }
 
 /* page connexion*/
@@ -69,9 +76,72 @@ box-shadow: 0px -1px 6px 6px rgba(196, 200, 73, 0.8);
     margin-top: 5em;
     font-size: 1.4em;
 }
-.contenu{
-    margin-left: 40%;
+
+
+.title{
+
+
+          display: flex;
+          align-items: center;
+          font-family: sans-serif;
+          width: 73%;
+
 }
-body{
-    background-color: black;
+      .title span {
+          text-transform: uppercase;
+          color: white;
+          font-weight: 100;
+          letter-spacing: 3px;
+          font-size: 70px;	
+      }
+      .title span:first-child {
+          animation: red 0.8s linear infinite;
+          animation-delay: 0.8s;
+      }
+      .title span:last-child {
+          animation: blue 0.8s linear infinite;
+          animation-delay: 0.8s;
+      }
+
+      @keyframes blue {
+          from {
+              text-shadow: 0 0 5px blue,
+                           0 0 15px blue,
+                           0 0 30px blue,
+                           0 0 60px blue;
+          }
+          to{
+            text-shadow: 0 0 5px red,
+            0 0 15px red,
+            0 0 30px red,
+            0 0 60px red;
+          }
+      }
+    .bt_profil{
+        margin-left:34%;
+        margin-top:4%;
+    }
+.info-user{
+    margin-left: 18%;
+    margin-top:2%;
+}
+.contenue-central{
+    margin-top: 1%;
+}
+.btn_profil{
+    font-size: 15px;
+    margin-right: 1%;
+}
+.test1{
+    margin-left: 18%;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+
+}
+.col1{
+    margin-left: -20%;
+    border: 1px solid black;
+}
+.reponse{
+   margin-top: 2%;
 }

@@ -3,6 +3,14 @@
 {% block title %}Mot de passe oublié{% endblock %}
  
 {% block central %}
-    <h1>Mot de passe oublié</h1>
-    {{ form(emailForm) }}
+
+    <div class="row justify-content-center nav-connection">
+        <div class="row justify-content-center form-connection">
+    <h1 class="h3 mb-3 font-weight-normal">Mot de passe oublié</h1>
+    {{ form_start(emailForm) }}
+            <div class="form-group">{{ form_row(emailForm.email,{'attr':{'class':'form-control'}}) }}</div>
+ <div>{{ form_row(emailForm.envoyer,{'attr':{'class':'btn btn-primary'}}) }}</div>
+    {{ form_end(emailForm) }}
+</div>
+</div>
 {% endblock %}

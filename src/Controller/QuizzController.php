@@ -209,11 +209,11 @@ class QuizzController extends AbstractController
             ]))
             ->setMethod('POST')
             ->add("reponse", ChoiceType::class, [
-                'choices' => $option,
                 'expanded' => true,
                 'label' => "Selectionne la bonne reponse :", 
+                'choices' => $option,
                 "attr"=> [
-                    "class"=> "reponse d-flex flex-column"
+                    "class"=> "reponse d-flex flex-column-reverse"
                 ]
             ])
 

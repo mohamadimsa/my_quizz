@@ -10,15 +10,16 @@
     <h1>Register</h1>
 
     {{ form_start(registerUserType) }}
-        {{ form_row(registerUserType.firstname) }}
-        {{ form_row(registerUserType.lastname) }}
-        {{ form_row(registerUserType.email) }}
-        {# .first and .second may vary in your use - see the note below #}
-        {{ form_row(registerUserType.password.first) }}
-        {{ form_row(registerUserType.password.second) }}
+               <div class="form-group">{{ form_row(registerUserType.firstname,{'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group">{{ form_row(registerUserType.lastname,{'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group">{{ form_row(registerUserType.email,{'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group">{{ form_row(registerUserType.password.first,{'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group">{{ form_row(registerUserType.password.second,{'attr':{'class':'form-control'}}) }}</div>
         {{ form_row(registerUserType.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+     <button class="btn btn-lg btn-primary" type="submit">
+        Register
+    </button>
     {{ form_end(registerUserType) }}
 
 {% endblock %}

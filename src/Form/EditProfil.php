@@ -30,7 +30,6 @@ class EditProfil extends AbstractType
                 'attr' => ['class' =>'form-control'],
             ])
             ->add('password',PasswordType::class)
-            ->add('valider', SubmitType::class)
         ;
     }
 

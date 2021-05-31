@@ -32,15 +32,24 @@ class RegisterUserController extends AbstractController
             $user->setPseudo(  
                     $form->get('firstname')->getData()
             );
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-       
+            
+            try{
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash('success', 'Utilisateur ajouté avec succès');
+                return $this->redirectToRoute('utilisateurs');
+            } catch (\Exception $e) {
+                $this->addFlash('warning', $e->getMessage());
+            }
     }
-    $this->addFlash('success', 'Utilisateur ajouté avec succès');
+   
+   
     return $this->render('admin/register_user.html.twig', [
         'registerUserType' => $form->createView(),
     ]);
+    
+   
    
 }
 }

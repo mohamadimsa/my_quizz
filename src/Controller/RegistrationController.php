@@ -65,7 +65,9 @@ class RegistrationController extends AbstractController
                 'text/html'
             )
         ;
+
         $mailer->send($message);
+        $this->addFlash('success', "Une message d'activation viens de vous être envoyé");
             return $this->redirectToRoute('app_login');
         }
         $categories_name = $this->getDoctrine()->getRepository(Categories::class)->findAll();

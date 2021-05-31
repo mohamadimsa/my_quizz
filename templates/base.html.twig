@@ -5,7 +5,7 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 		<link rel="stylesheet" href="{{asset('css/style.css')}}" type="text/css" >
 		<title>
-			{% block title %}My_quizz!
+			{% block title %}<h1>My_quizz!
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
@@ -24,10 +24,13 @@
                 {{ message }}
             </div>
         {% endfor %}
-<div class="container-fluid">
-    <div class="row menu" >
-		<nav class="navbar navbar-expand-lg  col ">
-			<a class="navbar-brand col-9 logo" href="{{ path('home')}}">&nbsp;&nbsp;My_quizz</a>
+<div class="header">
+    <div class="row menu">
+		<nav class="navbar navbar-expand-lg  col">
+			<div class="title">
+		<span><a class="navbar-brand logo" href="{{ path('home')}}">&nbsp;&nbsp;My_quizz</a></span>
+			</div>
+
 			    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 			<a class="link btn btn-outline-success" href="{{ path('show_profil') }}">Mon Compte</a>
 			<a class="link" href="{{ path('app_logout') }}">Déconnection</a>
@@ -46,7 +49,6 @@
 			 {% for categorie in categories %}
 				<a  class="nav-link" href="/categorie/{{categorie.name}}">{{categorie.name}}</a>
 				{% endfor %}
-
 			</nav>
 			   		
 		</div>

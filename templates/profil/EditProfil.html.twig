@@ -4,5 +4,14 @@
 
 {% block central %}
     <h1>Modifier mon profil</h1>
-    {{ form(editForm) }}
+     {{ form_start(editForm) }}
+               <div class="form-group">{{ form_row(editForm.firstname,{'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group">{{ form_row(editForm.lastname,{'attr':{'class':'form-control'}}) }}</div>
+        <div class="form-group">{{ form_row(editForm.email,{'attr':{'class':'form-control'}}) }}</div>
+           <div class="form-group">{{ form_row(editForm.password,{'attr':{'class':'form-control'}}) }}</div>
+
+     <button class="btn btn-lg btn-primary" type="submit">
+      Modifier
+    </button>
+    {{ form_end(editForm) }}
 {% endblock %}

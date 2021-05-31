@@ -14,13 +14,15 @@
 
 	</head>
 	<body>
-		<div class="container-fluid">
+		<div class="header">
 
 		  <div class="row menu" >
 		<nav class="navbar navbar-expand-lg  col ">
-			<a class="navbar-brand col-9 logo" href="{{ path('home')}}">&nbsp;&nbsp;My_quizz</a>
-			<a class="link btn btn-outline-success" href="{{path("show_profil") }}">Mon compte</a>
-			<a class="link" href="{{ path('app_logout') }}">deconnection</a>
+			<div class="title">
+		<span><a class="navbar-brand logo" href="{{ path('home')}}">&nbsp;&nbsp;My_quizz</a></span>
+			</div>
+			<a class="link btn btn-outline-success btn_profil" href="{{path("show_profil") }}">Mon compte</a>
+			<a class="link" href="{{ path('app_logout') }}">Déconnection</a>
 		</nav>
 	</div>
 
@@ -35,9 +37,9 @@
 			<nav class="nav flex-column">
 
 				<a  class="nav-link" href="/user/profil">Mon Profile</a>
-				<a  class="nav-link" href="/create/quizz">Cree un quizz</a>
 				<a  class="nav-link" href="/user/pseudo/historique">Accéder à mon historique</a>
 				{% if is_granted('ROLE_ADMIN') %}
+				<a  class="nav-link" href="/create/quizz">Cree un quizz</a>
 				<a  class="nav-link" href="{{ path('utilisateurs')}}">Liste utilisateur</a>
 				<a  class="nav-link" href="{{ path('register_user') }}">Enregistrer un utilisateur</a>
 				{% endif%}
