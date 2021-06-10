@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `categories`
 --
+use quizz;
 
 CREATE TABLE `categories` (
   `id` int NOT NULL,
